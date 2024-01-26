@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+
+<style>
+    div{
+        
+        width: 950px;
+        height: 300px;
+        padding: 10px ;
+        border: 7px lightsteelblue;
+        margin: 20px;
+    }
+    .border{
+        width: 100%;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555;
+    }
+
+
+</style>
+<style type="text/css">
+    .div1
+    {
+        background-color: darkslategray ;
+        width: 950px;
+        height: 300px;
+        padding: 10px ;
+        border: 7px lightsteelblue;
+        margin: 20px;
+    }
+    .div2
+    {
+        background-color: aliceblue ;
+        width: 100px;
+        height: 100px;
+        border: blue;
+        padding: 3%;
+        float: left;
+        border-width: 5px;
+        border-style: solid;
+    }
+    .div3
+    {
+        background-color: lightskyblue;
+        float:left;
+        width: 67.5%;
+        height: auto;
+
+    }
+    .img_deg
+    { 
+        float :right;
+        width: 25%;
+        height:auto;
+        border:5px solid #555;
+    }
+    .aspectwrapper {
+        display: inline-block; /* shrink to fit */
+        width: 100%;           /* whatever width you like */
+        position: relative;    /* so .content can use position: absolute */
+    }
+    .aspectwrapper::after {
+        padding-top: 56.25%; /* percentage of containing block _width_ */
+        display: block;
+        content: '';
+    }
+    .content {
+        position: absolute;
+        top: 0; bottom: 0; right: 0; left: 0;  /* follow the parent's edges */
+        outline: thin dashed green;            /* just so you can see the box */
+    }
+</style>
+<script src="JsForCw1004.js"></script>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <title>CourseFeedbackCollection</title>
+    <body onload="SetupDocument()" style="background-color: lightgray">
+        <h1 style="background-color: white" class="border"><b>Course representatives feedback submission</b>  </h1>
+        <div class="div3">
+            <p style="font-size: 150%;"><br>Use this form to report any issues you may be having with courses,lecturers, the Univeristy or any other issues you may have ecountered.<br> All issues reported will be completlely anonymous. Neither course representatives or lecturers
+                will know that you were the one to report an issue meaning you can feel free to report any issued you may be having. <br><br>
+           </p>
+        </div>
+        <br>
+        <img class="img_deg" src="https://i2-prod.plymouthherald.co.uk/incoming/article1526310.ece/ALTERNATES/s1200e/31739801_1803549163024446_8142646875204354048_n.png"  >
+        
+  
+        <br><br><br><br>
+        
+        <h3>Please select your Course</h3>
+        <select onclick="SelectCourse()" id="Courseselected">
+            <option value="N/A">Please select a course</option>
+            <option value="CS">Computer science</option>
+            <option value="CSSE"> Computer science(software engineering)</option>
+            <option value="CSGD">Computer science(Games Devlopment)</option>
+            <option value="CSAI">Computer science(Artificial intelligence)</option>
+            <option value="CSCS">Computer science(Cyber security)</option>
+        </select>
+
+        <h3>Please select your stage below</h3>
+        <select onclick="SelectStage()" id="StageSelected"> 
+            <option value="1">Stage 1</option>
+            <option value="2">Stage 2</option>
+            <option value="3">Stage 3</option>
+            <option value="3">Placement year</option>
+        </select>
+        <h3>Please select the option which best describes your issue</h3>
+        <select onclick="SelectSpread()" id="SpreadSelected">
+            <option value="Persona issue">Personal issue</option>
+            <option value="Module Wide">Module Wide issue</option>
+            <option value="Course Wide">Course wide issue</option>
+            <option value="Stage Wide">Stage wide issue</option>
+            <option value="University Wide">Univeristy wide issue</option>
+        </select>
+        <h3>Please select the options which best describe your issue</h3>
+        <form action="/category">
+            <input type="checkbox" id="Lecturer" name="choice1" value="Lecturer">
+            <label for="Lecturer">Lecturer</label><br>
+            <input type="checkbox" id="Coursework" name="choice2" value="Coursework">
+            <label for="Coursework">coursework</label><br>
+            <input type="checkbox" id="Facilities" name="choice3" value="Facilities">
+            <label for="Facilities">Facilities</label><br>
+            <input type="checkbox" id="other" name="choice4" value="Other">
+            <label for="other">Other</label><br>
+            <br><br>
+            
+
+        </form>
+        <button onclick="SelectCategories()">Submit</button>
+        <form action="Other option">
+            <label for="otherinfo" ><strong> you selected other please describe how you would catgeorise your issue</strong></label>
+            <input type="text" id="otherinfo" name="otherinfo" style="width:1000px ;"> <br> <br>
+            
+        </form>
+        <button onclick="SaveOtherDescription()">Submit </button>
+        
+        <h3>Please describe your issue</h3>
+        <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
+        <button onclick="SaveDescription()">Submit description</button>
+        <br>
+        <button type="Button" onclick="SaveSubmission()" style="background-color: cadetblue;"style="height:20px" >Submit</button>
+        <br><p id="substatus"><br></p>
+        
+    </body>
+    <body style="background-color: slateblue;">
+        <div class="div1">
+            <center><H1 style="color: azure;">News and updates</H1></center>
+            <br>
+            <div class="div2">
+
+            </div>
+            <div class="div2">
+
+            </div>
+            <div class="div2">
+
+            </div>
+            <div class="div2">
+
+            </div>
+        </div>
+        <br>
+        <div class="div2">
+
+        </div>
+    </body>
+</html>

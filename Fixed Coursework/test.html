@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<script src="JsForCw1004.js"></script>
+<html>
+  <head>
+    <title>CourseFeedbackCollection </title>
+    <style>
+      .container {
+        background-color: aquamarine;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border:5px solid #555;
+      }
+      img {
+        max-width: 100%;
+      }
+      .image {
+        flex-basis: 40%;
+        background-color: white;
+        min-width: 30%;
+        
+      }
+      .text {
+        font-size: 1.4vw;
+        padding-left: 20px;
+        
+      }
+      .img_deg
+      { 
+        border:5px solid #555;
+      }
+      .border{
+        width: 100%;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555;
+      }
+      .div1
+      {
+        background-color: darkslategray ;
+        width: 950px;
+        height: 300px;
+        padding: 10px ;
+        border: 7px lightsteelblue;
+        margin: 20px;
+      }
+      .div2
+      {
+        background-color: aliceblue ;
+        width: 100px;
+        height: 100px;
+        border: blue;
+        padding: 3%;
+        float: left;
+        border-width: 5px;
+        border-style: solid;
+        margin-left: 20px ;
+      }
+      .aspectwrapper 
+      {
+        display: inline-block; /* shrink to fit */
+        width: 100%;        /* whatever width you like */
+        position: relative;    /* so .content can use position: absolute */
+      }
+      .aspectwrapper::after {
+        padding-top: 56.25%; /* percentage of containing block _width_ */
+        display: block;
+        content: '';
+      }
+      .newscontentblock {
+        background-color: green;
+        position: absolute;
+        top: 0; bottom: 0; right: 0; left: 0;  
+        outline: solid darkslategrey;          
+      }
+      .MainContentBlock{
+        background-color: azure;
+        position: absolute;
+        top: 0; bottom: 0; right:0; left: 0;
+        outline: dashed red;    
+      }
+      .textbox{
+        background-color: white;
+        border: solid darkslategray;
+
+      }
+    </style>
+  </head>
+  <body onload="SetupDocument()" style="background-color: azure;">
+    <h1 style="background-color: white" class="border"><b>Course representatives feedback submission</b>  </h1>
+    <div class="container">
+      <div class="text">
+            <h1>Use this form to report any issues you may be having with courses,lecturers, the Univeristy or any other issues you may have ecountered.<br> All issues reported will be completlely anonymous. Neither course representatives or lecturers
+                will know that you were the one to report an issue meaning you can feel free to report any issued you may be having.</h1>
+      </div>
+      <div class="image">
+        <img class="img_deg" src= https://i2-prod.plymouthherald.co.uk/incoming/article1526310.ece/ALTERNATES/s1200e/31739801_1803549163024446_8142646875204354048_n.png">
+      </div>
+      
+    </div>
+
+    <hr>
+    <br>
+    <div class="aspectwrapper">
+      <div class="MainContentBlock">
+        <h3>Please select your Course</h3>
+        <select onclick="SelectCourse()" id="Courseselected">
+          <option value="N/A">Please select a course</option>
+          <option value="CS">Computer science</option>
+          <option value="CSSE"> Computer science(software engineering)</option>
+          <option value="CSGD">Computer science(Games Devlopment)</option>
+          <option value="CSAI">Computer science(Artificial intelligence)</option>
+          <option value="CSCS">Computer science(Cyber security)</option>
+        </select>
+        <h3>Please select your stage below</h3>
+        <select onclick="SelectStage()" id="StageSelected"> 
+          <option value="1">Stage 1</option>
+          <option value="2">Stage 2</option>
+          <option value="3">Stage 3</option>
+          <option value="3">Placement year</option>
+        </select>
+        <h3>Please select the option which best describes your issue</h3>
+        <select onclick="SelectSpread()" id="SpreadSelected">
+          <option value="Persona issue">Personal issue</option>
+          <option value="Module Wide">Module Wide issue</option>
+          <option value="Course Wide">Course wide issue</option>
+          <option value="Stage Wide">Stage wide issue</option>
+          <option value="University Wide">Univeristy wide issue</option>
+        </select>
+        
+        
+      </div>
+    </div>
+  
+    <h3>Please select the options which best describe your issue</h3>
+    <form action="/category">
+        <input type="checkbox" id="Lecturer" name="choice1" value="Lecturer">
+        <label for="Lecturer">Lecturer</label><br>
+        <input type="checkbox" id="Coursework" name="choice2" value="Coursework">
+        <label for="Coursework">coursework</label><br>
+        <input type="checkbox" id="Facilities" name="choice3" value="Facilities">
+        <label for="Facilities">Facilities</label><br>
+        <input type="checkbox" id="other" name="choice4" value="Other">
+        <label for="other">Other</label><br>
+    </form><br>
+    <button onclick="SelectCategories()">Submit</button>
+    <form action="Other option">
+      <label for="otherinfo" ><strong> you selected other please describe how you would catgeorise your issue</strong></label>
+      <input type="text" id="otherinfo" name="otherinfo" style="width:1000px ;">  
+  </form><br><br>
+  <button onclick="SaveOtherDescription()">Submit </button>
+  <h3>Please describe your issue</h3>
+  <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
+  <button onclick="SaveDescription()">Submit description</button><br>
+  <button type="Button" onclick="SaveSubmission()" style="background-color: cadetblue;"style="height:20px" >Submit</button>
+  <br><p id="substatus"><br></p>
+  <p id="demo">Fetch a file to change this text.</p>
+  <button type="button" onclick="DisplayClasses()" style="background-color: red;"style="height:20px">Display result</button>
+  <p id="cnameid">CourseName:</p><br>
+  <p id="stagid">StageName:</p><br>
+  <p id="issueid">IssueType:</p><br>
+  <p id="categid">Categories:</p><br>
+  <p id="descid">Description:</p><br>
+  <div class="aspectwrapper">
+    <div class="newscontentblock">
+      <center><H1 style="color: azure;">News and updates</H1></center><br>
+      <div class="div2">
+        <p style="color: greenyellow;"> Temporary placeholder</p>
+      </div>
+      <div class="div2">
+        <p style="color: greenyellow;"> Temporary placeholder</p>
+      </div>
+      <div class="div2">
+        <p style="color: greenyellow;"> Temporary placeholder</p>
+      </div>
+      <div class="div2">
+        <p style="color: greenyellow;"> Temporary placeholder</p>
+      </div>
+    </div>
+  </div>
+  </body>
+  
+</html>

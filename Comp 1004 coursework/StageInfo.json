@@ -1,0 +1,18 @@
+[
+    {
+        "Name":"Stage 1",
+        "Year":1
+    },
+    {
+        "Name":"Stage 2",
+        "Year":2
+    },
+    {
+        "Name":"Placement year",
+        "Year":3
+    },
+    {
+        "Name":"Final Year",
+        "Year":4
+    }
+]
