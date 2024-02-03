@@ -1,88 +1,161 @@
 class Feedback{
     constructor(StartDesription,Startstage,Startcourse,startcategories,startspread,Id)
     {
-        var Description=StartDesription;//string
-        var Current_stage=Startstage;//stage
-        var course=Startcourse;//course
-        var Categories=startcategories;//string[]
-        var SpreadOfIssue=startspread;//string
-        var CourseId=Id;//string
+        this.Description=StartDesription;//string
+        this.Current_stage=Startstage;//stage
+        this.course=Startcourse;//course
+        this.Categories=startcategories;//string[]
+        this.SpreadOfIssue=startspread;//string
+        this.CourseId=Id;//string
 
     }
     GetCourse(){
-        return Course;
+        return this.Course;
     }
     GetDescription() {
-        return Description;
+        return this.Description;
     }
     GetCourseId(){
-        return CourseId;
+        return this.CourseId;
     }   
 }
 class update extends Feedback{
     constructor(StartDesription,Startstage,Startcourse,startcategories,startspread,Id){
         super(StartDesription,Startstage,Startcourse,startcategories,startspread,Id);
-        var status="Feedback recieved";
+        this.status="Feedback recieved";
     }
 
 }
 class Course{
     constructor(N,I,S)
     {
-        var name=N;//string
-        var CourseId=I;//string
-        var Stages=S;//stage[]
+        this.name=N;//string
+        this.CourseId=I;//string
+        this.Stages=S;//stage[]
 
     }
-    GetName(){
+    GetName(){//returns string
         console.log("Getting course name");
-        return name;
+        return this.name;
     }
-    GetStages(){
-        return Stages;
+    GetID()//string
+    {
+        return this.CourseId;
+    }
+    GetStages(){//stages[]
+        return this.Stages;
+    }
+    SetName(NewName){//void
+        this.name=NewName;
+    }
+    SetID(NewID){//void
+        this.CourseId=NewID;
+    }
+    SetStages(NewStages){//void
+        this.stages=NewStages;
+    }
+    SetAll(NewName,NewID,NewStages){//void
+        this.SetName(NewName);
+        this.SetID(NewID);
+        this.SetStages(NewStages);
+    }
+    GetIfEmpty(){//bool
+        if(this.name==""||this.name=="N/A"||this.CourseId=="N/A"||this.CourseId==""){
+            return true;
+        }
+        return false;
     }
 }
 class Stage{
-    constructor(N,Y)
+    constructor(N,Y,I)
     {
-        var name=N;//string
-        var Year=Y;//int
-
+        this.Name=N;//string
+        this.Year=Y;//int
+        this.Id=I//String
+    }
+    GetName(){
+        return this.Name;
+    }
+    GetYear(){
+        return this.Year;
+    }
+    GetID(){
+        return this.Id;
+    }
+    SetName(NewName){
+        this.Name=NewName;
+    }
+    SetYear(NewYear){
+        this.Year=NewYear;
+    }
+    SetId(NewID){
+        this.Id=NewID;
+    }
+    SetAll(NewName,NewYear,NewID){
+        this.SetName(NewName);
+        this.SetYear(NewYear);
+        this.SetId(NewID);
+    }
+    GetIfEmpty(){//bool
+        if(this.Name=="N/A"||this.name==""){
+            return true;
+        }
+        return false;
 
     }
 }
-var stages=[];
+var Stages=[];
 var Courses=[];
 var Updates=[];
 var Feedbackrecord=[];
 var FeedbackIndex;
 var CatsIndex=0;
-var SelectedCourse;//course
+let SelectedCourse=new Course("N/A","N/A",emptystages);
+let SelectedStage=new Stage("N/A",0,"N/A");
 var SelectedSpread;//string
 var CategoriesSelected;
-var EmptyCategories=[]
-var emptystages=[];
-let EmptyStage=new Stage("N/A",0);
-let EmptyCourse=new Course("N/A","N/A",emptystages);
+var EmptyCategories=[]//string
+var emptystages=[];//stage[]
+let EmptyStage=new Stage("N/A",0);//stage
+let EmptyCourse=new Course("N/A","N/A",emptystages);//course
+var SelectedSpread;//string
+var CategoriesSelected=[];
+var IssueDescription;//string
 
 function SelectStage()
 {
     var Stageid=document.getElementById('StageSelected').value;
-    console.log("Stage selected");
-    console.log("You selected"+Stageid);
-    for(i=0;i<stages.length;i++){
-        if(Stageid==stages[i].getId())
+   // console.log("Selecting stage(start of function)");
+    //console.log("You selected"+Stageid);
+    var StageName="";
+    var StageYear=0;
+    var StageId="";
+    for(i=0;i<Stages.length;i++){
+        //console.log("stages[i]id:"+Stages[i].GetID()+" Selection:"+Stageid);
+        if(Stageid==Stages[i].GetID())
         {
-            var Selectedstage=stages[i];
+            //console.log("Stage found");
+            StageName=Stages[i].GetName();
+            StageId=Stages[i].GetID();
+            StageYear=Stages[i].GetYear();
         }
     }
+    if(StageName==""){
+        console.log("No stage selected");
+    }
+    else{
+       // console.log("stage selected")
+     //   console.log("Selected name:"+StageName);
+        SelectedStage.SetAll(StageName,StageYear,StageId);
+    }
+
 }
 function SelectSpread(){
-    var SelectedSpread=document.getElementById("SpreadSelected").value;
+    SelectedSpread=document.getElementById("SpreadSelected").value;
     console.log("Selected spread="+SelectedSpread);
 }
 function SaveDescription(){
-    var IssueDescription=document.getElementById("IssueDescription").value;
+    IssueDescription=document.getElementById("IssueDescription").value;
     console.log("Issue described: "+IssueDescription);
 }
 function SaveOtherDescription(){
@@ -92,10 +165,10 @@ function SaveOtherDescription(){
 }
 function SelectCategories()
 {
+    var EmptyArray=[];
+    SelectedCategories=EmptyArray;
     console.log("Function Called");
     var Catsindex=0;
-
-    var CategoriesSelected=[];
     var LecturerChecked=document.getElementById("Lecturer");
     if(LecturerChecked.checked==true)
     {
@@ -115,14 +188,26 @@ function SelectCategories()
         CategoriesSelected[Catsindex++]=document.getElementById("Facilities").value;
     }
     var otherChecked=document.getElementById("other");
-    if(FacilitiesChecked.checked==true)
+    if(otherChecked.checked==true)
     {
         //console.log("other checked");
-        CategoriesSelected[Catsindex++]=document.getElementById("other").value;
+        //CategoriesSelected[Catsindex++]=document.getElementById("other").value;
+        
+        var OtherSelection=document.getElementById("otherinfo").value;
+        if(OtherSelection==""){
+            document.getElementById("substatus").innerHTML="Other selection made but no description submitted";
+        }
+        else{
+            document.getElementById("substatus").innerHTML="";
+            CategoriesSelected[CatsIndex++]=OtherSelection;
+        }
+        
     }
-    for(i=0;i<CategoriesSelected.length;i++){
-        console.log(CategoriesSelected[i] +" selected");
+    else{
+        document.getElementById("substatus").innerHTML="";
     }
+
+    
 
 
 }
@@ -131,65 +216,130 @@ function SelectCourse()
     var Courseid=document.getElementById('Courseselected').value;
     console.log("Course selected");
     console.log("You selected"+Courseid);
-    var SelectedCourse=null;
-    if(Courseid=="N/A"){
-        console.log("No course selected");
-        SelectedCourse=null;
-    }
+    
+    var SelectedCourseName="";
+    var SelectedCourseID="";
+    var SelectedCourseStages=[];
+
     for(i=0;i<Courses.length;i++)
     {
-        if(Courseid==courses[i].GetCourseId)
-        {
-            SelectedCourse=courses[i];
-            console.log(SelectedCourse.get);
+        if(Courseid==Courses[i].GetID())
+        {         
+            SelectedCourseName=Courses[i].GetName();
+            SelectedCourseID=Courses[i].GetID();
+            SelectedCourseStages=Courses[i].GetStages();
         }
     }
-    //setstages();
-}
-function CreateStages()
-{
-    fetch('./StageInfo.json');
-}
-function setstages(course)
-{
-    stages=SelectedCourse.GetStages();
-
+    if(SelectedCourseName!=""){
+        SelectedCourse.SetAll(SelectedCourseName,SelectedCourseID,SelectedCourseStages)
+    }
+    else{
+        console.log("No Course selected");
+    }
 }
 function SaveSubmission()
 {
     console.log("Saving submission");
     SelectCourse();
-    console.log("Course selected:"+SelectedCourse.GetName())
-    if(SelectCourse==null){
-        document.getElementById("substatus").innerHTML="Please select a course";
+    console.log("Course selected:"+SelectedCourse.GetName());
+    console.log("Selecting Stage");
+    SelectStage();
+    console.log("Selected stage:"+SelectedStage.GetName());
+    console.log("Selecting Spread");
+    SelectSpread();
+    console.log("Selected Spread:"+SelectedSpread);
+    console.log("Selecting categories");
+    SelectCategories();
+    for(i=0;i<CategoriesSelected.length;i++){
+        console.log(CategoriesSelected[i] +" selected");
     }
-    else{
-        var Description=document.getElementById("Cs");
-        var Categories;
-        var spread;
-        Feedbackrecord[FeedbackIndex]=new Feedback(Description,SelectStage,SelectedCourse,SelectCategories,SelectedSpread);
-        FeedbackIndex++;
-        document.getElementById("substatus").innerHTML="Feedback submitted,thank you";
-    }
+    console.log("selecting description");
+    SaveDescription();
+    console.log("Issue description:" + IssueDescription);
+
+    console.log("Checking if all fields correctly filled");
+
+    
+    
+    
+
+
+    
     
 
 }
+function DisplayALlStages(){
+    console.log("Displaying all stages");
+    for(i=0;i<Stages.length;i++){
+        console.log("Stages["+i+"]: name:"+Stages[i].GetName()+"| ")
+    }
+
+}
+function CheckInputs(){
+    var IssueFound=false;//bool
+    if(SelectedCourse.GetIfEmpty())
+    {
+        console.log("No Course selected");
+        IssueFound=true;
+    }
+    if(SelectedStage.GetIfEmpty())
+    {
+        console.log("No Course Selected");
+        IssueFound=true;
+    }
+    if(SelectedSpread==""){
+        console.log("No issue spread selected");
+        IssueFound=true;
+    }
+    if(CategoriesSelected.length==0){
+        console.log("No categories selected");
+        IssueFound=true;
+    }
+    if(IssueDescription=="");
+    {
+        console.log("No description found");
+        IssueFound=true;
+    }
+    
+}
 function SetupDocument(){
     console.log("Document Setting up");
+    CreateStages();
     CreateCourses();
+}
+function CreateStages(){
+    let Stage1=new Stage("Stage1",1,"1");
+    let Stage2=new Stage("Stage2",2,"2");
+    let Stage3=new Stage("Final Stage",4,"3");
+    let PlacementStage=new Stage("Placemant year",3,"p");
+    Stages[0]=Stage1;
+    Stages[1]=Stage2;
+    Stages[2]=PlacementStage;
+    Stages[3]=Stage3;
 }
 function CreateCourses()
 {   
     console.log("Creating courses");
-    let file="Courses.json";
-    fetch("Courses.json").then(function(response){
-        return response.json();
-    }).then(function(obj){
-        console.log(obj);
-    }).catch(function(error){
-        console.error("Error with reading file");
-        console.error(error);
-    })
+    let ComputerScienceCourse=new Course("Computer Science","CS",Stages);
+    let ComputerScienceSoftwareengineeringCourse=new Course("Computer Science(Software engineering)","CSSE",Stages);
+    let ComputerScienceGamesDevelopmentCourse=new Course("Computer Science(Games Development)","CSGD",Stages);
+    let ComputerScienceArtificalIntelligenceCourse=new Course("Computer Science(Artificial intelligence)","CSAI",Stages);
+    let ComputerScienceCyberSecurityCourse=new Course("Computer Science(Cyber Security)","CSCS",Stages);
+    Courses[0]=ComputerScienceCourse;
+    Courses[1]=ComputerScienceSoftwareengineeringCourse;
+    Courses[2]=ComputerScienceGamesDevelopmentCourse;
+    Courses[3]=ComputerScienceArtificalIntelligenceCourse;
+    Courses[4]=ComputerScienceCyberSecurityCourse;
+
+    //let file="Courses.json";
+    //fetch("Courses.json").then(function(response){
+     //   return response.json();
+    //}).then(function(obj){
+      //  console.log(obj);
+    //}).catch(function(error){
+      //  console.error("Error with reading file");
+        //console.error(error);
+    //})
 }
 function DisplayClasses(){
     var currentFeedback=Feedbackrecord[FeedbackIndex-1];

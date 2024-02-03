@@ -117,7 +117,7 @@
           <option value="1">Stage 1</option>
           <option value="2">Stage 2</option>
           <option value="3">Stage 3</option>
-          <option value="3">Placement year</option>
+          <option value="p">Placement year</option>
         </select>
         <h3>Please select the option which best describes your issue</h3>
         <select onclick="SelectSpread()" id="SpreadSelected">
@@ -143,15 +143,12 @@
         <input type="checkbox" id="other" name="choice4" value="Other">
         <label for="other">Other</label><br>
     </form><br>
-    <button onclick="SelectCategories()">Submit</button>
     <form action="Other option">
-      <label for="otherinfo" ><strong> you selected other please describe how you would catgeorise your issue</strong></label>
+      <label for="otherinfo" ><strong> you selected other. Please describe how you would catgeorise your issue</strong></label>
       <input type="text" id="otherinfo" name="otherinfo" style="width:1000px ;">  
   </form><br><br>
-  <button onclick="SaveOtherDescription()">Submit </button>
   <h3>Please describe your issue</h3>
   <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
-  <button onclick="SaveDescription()">Submit description</button><br>
   <button type="Button" onclick="SaveSubmission()" style="background-color: cadetblue;"style="height:20px" >Submit</button>
   <br><p id="substatus"><br></p>
   <p id="demo">Fetch a file to change this text.</p>
