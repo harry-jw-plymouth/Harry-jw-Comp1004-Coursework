@@ -3,10 +3,10 @@ class Feedback{
     {
         this.Description=StartDesription;//string
         this.Current_stage=Startstage;//stage
-        this.course=Startcourse;//course
+        this.Course=Startcourse;//course
         this.Categories=startcategories;//string[]
         this.SpreadOfIssue=startspread;//string
-        this.CourseId=Id;//string
+        this.FeedbackId=Id;//string
 
     }
     GetCourse(){
@@ -15,8 +15,19 @@ class Feedback{
     GetDescription() {
         return this.Description;
     }
+    DisplayFeedback(){
+        console.log("Displaying information for feedback with Id of:"+this.FeedbackId);
+        console.log("Description of issue:"+this.Description);
+        console.log("Selected Stage:"+this.Current_stage.GetName());
+        console.log("Selected course:"+this.Course.GetName());
+        console.log("Selected Categories:");
+        for(i=0;i<this.Categories.length;i++){
+            console.log("Category "+i+":"+this.Categories[i]);
+        }
+        console.log("Selected spread:"+this.SpreadOfIssue);
+    }
     GetCourseId(){
-        return this.CourseId;
+        return this.FeedbackId;
     }   
 }
 class update extends Feedback{
@@ -108,7 +119,7 @@ var Stages=[];
 var Courses=[];
 var Updates=[];
 var Feedbackrecord=[];
-var FeedbackIndex;
+var FeedbackIndex=0;
 var CatsIndex=0;
 let SelectedCourse=new Course("N/A","N/A",emptystages);
 let SelectedStage=new Stage("N/A",0,"N/A");
@@ -258,14 +269,28 @@ function SaveSubmission()
     console.log("Issue description:" + IssueDescription);
 
     console.log("Checking if all fields correctly filled");
+    if(CheckInputs()){
+        console.log("Issue with 1 or more inputs");
+    }
+    else{
+        console.log("No input issues");
+        CreateFeedBack();
+
+    }
+
 
     
     
-    
 
 
     
     
+
+}
+function CreateFeedBack(){
+    console.log("Saving inputs to feedback class");
+    let NewFeedBack=new Feedback(IssueDescription,SelectedStage,SelectedCourse,SelectedCategories,SelectedSpread,FeedbackIndex);
+    NewFeedBack.DisplayFeedback();
 
 }
 function DisplayALlStages(){
@@ -276,30 +301,40 @@ function DisplayALlStages(){
 
 }
 function CheckInputs(){
-    var IssueFound=false;//bool
+    //var IssueFound=false;//bool
     if(SelectedCourse.GetIfEmpty())
     {
         console.log("No Course selected");
-        IssueFound=true;
+        return true;
     }
     if(SelectedStage.GetIfEmpty())
     {
         console.log("No Course Selected");
-        IssueFound=true;
+        return true;
     }
     if(SelectedSpread==""){
         console.log("No issue spread selected");
-        IssueFound=true;
+        return true;
     }
     if(CategoriesSelected.length==0){
         console.log("No categories selected");
-        IssueFound=true;
+        return true;
     }
-    if(IssueDescription=="");
-    {
+    //if(IssueDescription=="");
+    //{
+      //  console.log("No description found");
+        //return true;
+    //}
+    if(IssueDescription==""){
         console.log("No description found");
-        IssueFound=true;
+        return true;
     }
+    console.log("No issues with inputs found");
+    return false;
+    
+    
+    
+    
     
 }
 function SetupDocument(){

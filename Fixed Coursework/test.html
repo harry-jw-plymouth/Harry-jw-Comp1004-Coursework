@@ -4,6 +4,9 @@
   <head>
     <title>CourseFeedbackCollection </title>
     <style>
+      .button:hover{
+        background-color: chartreuse;
+      }
       .container {
         background-color: aquamarine;
         display: flex;
@@ -121,7 +124,7 @@
         </select>
         <h3>Please select the option which best describes your issue</h3>
         <select onclick="SelectSpread()" id="SpreadSelected">
-          <option value="Persona issue">Personal issue</option>
+          <option value="Personal issue">Personal issue</option>
           <option value="Module Wide">Module Wide issue</option>
           <option value="Course Wide">Course wide issue</option>
           <option value="Stage Wide">Stage wide issue</option>
@@ -149,7 +152,7 @@
   </form><br><br>
   <h3>Please describe your issue</h3>
   <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
-  <button type="Button" onclick="SaveSubmission()" style="background-color: cadetblue;"style="height:20px" >Submit</button>
+  <button type="Button" onclick="SaveSubmission()" style="background-color: cadetblue;"style="height:20px"  >Submit</button>
   <br><p id="substatus"><br></p>
   <p id="demo">Fetch a file to change this text.</p>
   <button type="button" onclick="DisplayClasses()" style="background-color: red;"style="height:20px">Display result</button>
