@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The title of the document</title>
+    <style>
+      .container {
+        background-color: aquamarine;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border:5px solid #555;
+      }
+      img {
+        max-width: 100%;
+      }
+      .image {
+        flex-basis: 40%;
+        background-color: white;
+        min-width: 30%;
+        
+      }
+      .text {
+        font-size: 1.4vw;
+        padding-left: 20px;
+        
+      }
+      .img_deg
+    { 
+        border:5px solid #555;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="text">
+            <h1>Use this form to report any issues you may be having with courses,lecturers, the Univeristy or any other issues you may have ecountered.<br> All issues reported will be completlely anonymous. Neither course representatives or lecturers
+                will know that you were the one to report an issue meaning you can feel free to report any issued you may be having.</h1>
+      </div>
+      <div class="image">
+        <img class="img_deg" src= https://i2-prod.plymouthherald.co.uk/incoming/article1526310.ece/ALTERNATES/s1200e/31739801_1803549163024446_8142646875204354048_n.png">
+      </div>
+      
+    </div>
+    <hr>
+    <h3>Please select your Course</h3>
+        <select onclick="SelectCourse()" id="Courseselected">
+            <option value="N/A">Please select a course</option>
+            <option value="CS">Computer science</option>
+            <option value="CSSE"> Computer science(software engineering)</option>
+            <option value="CSGD">Computer science(Games Devlopment)</option>
+            <option value="CSAI">Computer science(Artificial intelligence)</option>
+            <option value="CSCS">Computer science(Cyber security)</option>
+        </select>
+  </body>
+</html>
