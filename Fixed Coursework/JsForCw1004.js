@@ -26,7 +26,7 @@ class Feedback{
         }
         console.log("Selected spread:"+this.SpreadOfIssue);
     }
-    GetCourseId(){
+    GetFeedbackId(){
         return this.FeedbackId;
     }   
 }

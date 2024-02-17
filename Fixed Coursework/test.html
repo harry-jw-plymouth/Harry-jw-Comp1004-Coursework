@@ -4,8 +4,13 @@
   <head>
     <title>CourseFeedbackCollection </title>
     <style>
-      .button:hover{
+      .submitButton{
+        background-color: cadetblue;
+
+      }
+      submitbutton:hover{
         background-color: chartreuse;
+        color:chartreuse;
       }
       .container {
         background-color: aquamarine;
@@ -26,6 +31,10 @@
       .text {
         font-size: 1.4vw;
         padding-left: 20px;
+        
+      }
+      .QuestionsText{
+        font-size: 4vw;
         
       }
       .img_deg
@@ -57,16 +66,18 @@
         float: left;
         border-width: 5px;
         border-style: solid;
-        margin-left: 20px ;
+        margin-left: 5% ;
+        margin-right: 5%;
       }
       .aspectwrapper 
       {
         display: inline-block; /* shrink to fit */
         width: 100%;        /* whatever width you like */
+        height: fit-content;
         position: relative;    /* so .content can use position: absolute */
       }
       .aspectwrapper::after {
-        padding-top: 56.25%; /* percentage of containing block _width_ */
+        padding-top: 50%; /* percentage of containing block _width_ */
         display: block;
         content: '';
       }
@@ -74,18 +85,27 @@
         background-color: green;
         position: absolute;
         top: 0; bottom: 0; right: 0; left: 0;  
-        outline: solid darkslategrey;          
+        outline: solid darkslategrey;   
+        max-height: fit-content; 
+        min-height: 400px;
+              
       }
       .MainContentBlock{
         background-color: azure;
         position: absolute;
         top: 0; bottom: 0; right:0; left: 0;
-        outline: dashed red;    
+        outline: dashed red; 
+        height: 600px;   
+        min-height: 500px;
+        margin-bottom: 20px;
       }
       .textbox{
         background-color: white;
         border: solid darkslategray;
 
+      }
+      .testholder{
+        min-height: 1500px;
       }
     </style>
   </head>
@@ -99,6 +119,7 @@
       <div class="image">
         <img class="img_deg" src= https://i2-prod.plymouthherald.co.uk/incoming/article1526310.ece/ALTERNATES/s1200e/31739801_1803549163024446_8142646875204354048_n.png">
       </div>
+    
       
     </div>
 
@@ -106,7 +127,7 @@
     <br>
     <div class="aspectwrapper">
       <div class="MainContentBlock">
-        <h3>Please select your Course</h3>
+        <h3 class="QuestionsText">Please select your Course</h3>
         <select onclick="SelectCourse()" id="Courseselected">
           <option value="N/A">Please select a course</option>
           <option value="CS">Computer science</option>
@@ -130,54 +151,65 @@
           <option value="Stage Wide">Stage wide issue</option>
           <option value="University Wide">Univeristy wide issue</option>
         </select>
-        
-        
+
+        <h3>Please select the options which best describe your issue</h3>
+        <form action="/category">
+          <input type="checkbox" id="Lecturer" name="choice1" value="Lecturer">
+          <label for="Lecturer">Lecturer</label><br>
+          <input type="checkbox" id="Coursework" name="choice2" value="Coursework">
+          <label for="Coursework">coursework</label><br>
+          <input type="checkbox" id="Facilities" name="choice3" value="Facilities">
+          <label for="Facilities">Facilities</label><br>
+          <input type="checkbox" id="other" name="choice4" value="Other">
+          <label for="other">Other</label><br>
+        </form><br>
+        <form action="Other option">
+          <label for="otherinfo" ><strong> you selected other. Please describe how you would catgeorise your issue</strong></label>
+          <input type="text" id="otherinfo" name="otherinfo" style="width:1000px ;">  
+        </form><br><br>
+        <h3>Please describe your issue</h3>
+        <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
+        <button type="Button" class="submitButton" onclick="SaveSubmission()">Submit</button>
+        <button type="Button" onclick="SaveSubmission()" style="background-color: cadetblue;"style="height:20px"  >Submit</button>
+        <br><p id="substatus"><br></p>
+
+        <div class="aspectwrapper">
+          <div class="newscontentblock">
+            <center><H1 style="color: azure;">News and updates</H1></center><br>
+            <div class="div2">
+              <p style="color: greenyellow;"> Temporary placeholder</p>
+            </div>
+            <div class="div2">
+              <p style="color: greenyellow;"> Temporary placeholder</p>
+            </div>
+            <div class="div2">
+              <p style="color: greenyellow;"> Temporary placeholder</p>
+            </div>
+            <div class="div2">
+              <p style="color: greenyellow;"> Temporary placeholder</p>
+
+            </div>
+            
+            <p></p>
+           
+          </div>
+        </div>
       </div>
     </div>
+    
   
-    <h3>Please select the options which best describe your issue</h3>
-    <form action="/category">
-        <input type="checkbox" id="Lecturer" name="choice1" value="Lecturer">
-        <label for="Lecturer">Lecturer</label><br>
-        <input type="checkbox" id="Coursework" name="choice2" value="Coursework">
-        <label for="Coursework">coursework</label><br>
-        <input type="checkbox" id="Facilities" name="choice3" value="Facilities">
-        <label for="Facilities">Facilities</label><br>
-        <input type="checkbox" id="other" name="choice4" value="Other">
-        <label for="other">Other</label><br>
-    </form><br>
-    <form action="Other option">
-      <label for="otherinfo" ><strong> you selected other. Please describe how you would catgeorise your issue</strong></label>
-      <input type="text" id="otherinfo" name="otherinfo" style="width:1000px ;">  
-  </form><br><br>
-  <h3>Please describe your issue</h3>
-  <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
-  <button type="Button" onclick="SaveSubmission()" style="background-color: cadetblue;"style="height:20px"  >Submit</button>
-  <br><p id="substatus"><br></p>
-  <p id="demo">Fetch a file to change this text.</p>
+  
+  
+  <!--
+    <p id="demo">Fetch a file to change this text.</p>
   <button type="button" onclick="DisplayClasses()" style="background-color: red;"style="height:20px">Display result</button>
   <p id="cnameid">CourseName:</p><br>
   <p id="stagid">StageName:</p><br>
   <p id="issueid">IssueType:</p><br>
   <p id="categid">Categories:</p><br>
   <p id="descid">Description:</p><br>
-  <div class="aspectwrapper">
-    <div class="newscontentblock">
-      <center><H1 style="color: azure;">News and updates</H1></center><br>
-      <div class="div2">
-        <p style="color: greenyellow;"> Temporary placeholder</p>
-      </div>
-      <div class="div2">
-        <p style="color: greenyellow;"> Temporary placeholder</p>
-      </div>
-      <div class="div2">
-        <p style="color: greenyellow;"> Temporary placeholder</p>
-      </div>
-      <div class="div2">
-        <p style="color: greenyellow;"> Temporary placeholder</p>
-      </div>
-    </div>
-  </div>
+  -->
+  
   </body>
   
 </html>
