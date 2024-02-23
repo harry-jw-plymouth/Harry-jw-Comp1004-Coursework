@@ -36,6 +36,7 @@
       .QuestionsText{
         font-size: 4vw;
         
+        
       }
       .img_deg
       { 
@@ -172,6 +173,16 @@
         <button type="Button" class="submitButton" onclick="SaveSubmission()">Submit</button>
         <button type="Button" onclick="SaveSubmission()" style="background-color: cadetblue;"style="height:20px"  >Submit</button>
         <br><p id="substatus"><br></p>
+        <hr>
+        <h2>Sign in to view reported issues</h2>
+        <h3>Please only sign in if you are a course representative</h3>
+        <p>Username</p>
+        <input type="text" id="Username">
+        <p>Password</p>
+        <input type="text" id="Password"><br>
+        <button type="Button" onclick="AttemptSignIn()">Sign in</button>
+        <p id="SignInResult"></p>
+        <hr>
 
         <div class="aspectwrapper">
           <div class="newscontentblock">

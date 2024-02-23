@@ -115,6 +115,18 @@ class Stage{
 
     }
 }
+class Account{
+    constructor( UN,PW){
+        this.UserName=UN;//string
+        this.Password=PW;//string
+    }
+    GetUserName(){
+        return this.UserName;
+    }
+    GetPassWord(){
+        return this.Password;
+    }
+}
 var Stages=[];
 var Courses=[];
 var Updates=[];
@@ -132,6 +144,7 @@ let EmptyCourse=new Course("N/A","N/A",emptystages);//course
 var SelectedSpread;//string
 var CategoriesSelected=[];
 var IssueDescription;//string
+var accounts=[]; //Account[]
 
 function SelectStage()
 {
@@ -341,6 +354,18 @@ function SetupDocument(){
     console.log("Document Setting up");
     CreateStages();
     CreateCourses();
+    CreateAccounts();
+}
+function CreateAccounts(){
+    console.log("Creating accounts");
+    let Account1=new Account("Harry.watton","password1");
+    let Account2=new Account("Harry2","Password2");
+    let Account3=new Account("Jarry3","password3");
+    accounts[0]=Account1;
+    accounts[1]=Account2;
+    accounts[2]=Account3;
+
+    //will be replaced with JSON
 }
 function CreateStages(){
     let Stage1=new Stage("Stage1",1,"1");
@@ -395,3 +420,46 @@ function GetStatusOfFeedbacksForPage(){
         }
     }
 }  
+function UserNameFound(UserName){
+    console.log("Finding Username");
+    for(i=0;i<accounts.length;i++){
+        if(UserName==accounts[i].GetUserName()){
+            return true;
+        }
+    }
+    console.log("Username not found");
+    return false;
+}
+function GetAccount(UserName){
+    for(i=0;i<accounts.length;i++){
+        if(UserName==accounts[i].GetUserName()){
+            return accounts[i];
+        }
+    }
+    return null;
+}
+function AttemptSignIn(){
+    console.log("Attempting sign in");
+    var UsernameSelected=document.getElementById("Username").value;
+    var PasswordSelected=document.getElementById("Password").value;
+    console.log("Username: "+UsernameSelected);
+    console.log("Password: "+PasswordSelected);
+    if(UserNameFound(UsernameSelected)){
+        var CurrentAccount=GetAccount(UsernameSelected);
+        if(CurrentAccount.GetPassWord()==PasswordSelected){
+            console.log("Sign in succesful");
+            document.getElementById("SignInResult").innerHTML="Sign in succesful";
+        }
+        else{
+            console.log("Wrong password");
+            document.getElementById("SignInResult").innerHTML="Incorrect password";
+        }
+
+    }
+    else{
+        document.getElementById("SignInResult").innerHTML="Username not found";
+
+    }
+
+    
+}
