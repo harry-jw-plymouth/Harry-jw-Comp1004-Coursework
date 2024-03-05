@@ -20,19 +20,21 @@
          //   console.log(dataJson);
         
         function fetchJSONData() {
-            fetch("https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json");
-            
-            fetch('Class.json').then(function(response){
-                return response.json;
-
-            }).then(function(obj){
-                console.log(obj);
-                console.log("hello");
-
-            }).catch(function(error){
-                console.log("Error");
-                console.error(error);
-            });
+            const fs = 'fs';
+            const path = 'script.json';
+            const filePath = path.join(process.cwd(), 'test.json');
+            fs.readFile(filePath, 'utf8', (err, contents) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            try {
+                const jsonString = JSON.parse(contents);
+                console.log(jsonString);
+            } catch (jsonError) {
+                console.error('Error parsing JSON');
+            }
+        });
            
         }
         fetchJSONData();

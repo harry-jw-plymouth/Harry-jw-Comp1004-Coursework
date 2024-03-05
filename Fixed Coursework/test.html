@@ -18,6 +18,8 @@
         align-items: center;
         justify-content: center;
         border:5px solid #555;
+        border-radius: 25px;
+        
       }
       img {
         max-width: 100%;
@@ -26,17 +28,32 @@
         flex-basis: 40%;
         background-color: white;
         min-width: 30%;
+        border-radius: 25px;
         
       }
       .text {
         font-size: 1.4vw;
         padding-left: 20px;
+        font-family:sans-serif;
+        
+        
         
       }
       .QuestionsText{
-        font-size: 4vw;
+       font-style: oblique;
+        font-size: 20px;
         
         
+        
+      }
+      .CourseInput{
+        height: 30px;
+        width: 50vw;
+        min-width: fit-content+50px;
+        font-size: 18px;
+      }
+      .OptionText{
+        font-size: 2vw;
       }
       .img_deg
       { 
@@ -60,8 +77,8 @@
       .div2
       {
         background-color: aliceblue ;
-        width: 100px;
-        height: 100px;
+        width: 400px;
+        height: fit-content;
         border: blue;
         padding: 3%;
         float: left;
@@ -69,16 +86,19 @@
         border-style: solid;
         margin-left: 5% ;
         margin-right: 5%;
+        margin-bottom: 5%;
+        position: relative;
+
       }
       .aspectwrapper 
       {
-        display: inline-block; /* shrink to fit */
-        width: 100%;        /* whatever width you like */
+        display: inline-block;
+        width: 100%;     
         height: fit-content;
-        position: relative;    /* so .content can use position: absolute */
+        position: relative;    
       }
       .aspectwrapper::after {
-        padding-top: 50%; /* percentage of containing block _width_ */
+        padding-top: 50%; 
         display: block;
         content: '';
       }
@@ -89,13 +109,14 @@
         outline: solid darkslategrey;   
         max-height: fit-content; 
         min-height: 400px;
+        border-radius: 25px;
               
       }
       .MainContentBlock{
         background-color: azure;
         position: absolute;
         top: 0; bottom: 0; right:0; left: 0;
-        outline: dashed red; 
+         
         height: 600px;   
         min-height: 500px;
         margin-bottom: 20px;
@@ -107,6 +128,26 @@
       }
       .testholder{
         min-height: 1500px;
+      }
+      .NewsTitle{
+        color: #555;
+        font-size: 2vw;
+      }
+      .TickBoxText{
+        font-size:medium;
+      }
+      .ButtonBox{
+        position: absolute;
+        bottom: 0;
+        left:0;
+        right: 0;
+        border-style: dashed;
+        border-color: red;
+        display: flex; 
+        justify-content: space-between; 
+        height: fit-content;
+        
+
       }
     </style>
   </head>
@@ -129,7 +170,7 @@
     <div class="aspectwrapper">
       <div class="MainContentBlock">
         <h3 class="QuestionsText">Please select your Course</h3>
-        <select onclick="SelectCourse()" id="Courseselected">
+        <select class="CourseInput" onclick="SelectCourse()" id="Courseselected">
           <option value="N/A">Please select a course</option>
           <option value="CS">Computer science</option>
           <option value="CSSE"> Computer science(software engineering)</option>
@@ -137,15 +178,15 @@
           <option value="CSAI">Computer science(Artificial intelligence)</option>
           <option value="CSCS">Computer science(Cyber security)</option>
         </select>
-        <h3>Please select your stage below</h3>
-        <select onclick="SelectStage()" id="StageSelected"> 
+        <h3 class="QuestionsText">Please select your stage below</h3>
+        <select class="CourseInput" onclick="SelectStage()" id="StageSelected"> 
           <option value="1">Stage 1</option>
           <option value="2">Stage 2</option>
           <option value="3">Stage 3</option>
           <option value="p">Placement year</option>
         </select>
-        <h3>Please select the option which best describes your issue</h3>
-        <select onclick="SelectSpread()" id="SpreadSelected">
+        <h3 class="QuestionsText">Please select the option which best describes your issue</h3>
+        <select class="CourseInput" onclick="SelectSpread()" id="SpreadSelected">
           <option value="Personal issue">Personal issue</option>
           <option value="Module Wide">Module Wide issue</option>
           <option value="Course Wide">Course wide issue</option>
@@ -153,22 +194,22 @@
           <option value="University Wide">Univeristy wide issue</option>
         </select>
 
-        <h3>Please select the options which best describe your issue</h3>
+        <h3 class="QuestionsText">Please select the options which best describe your issue</h3>
         <form action="/category">
           <input type="checkbox" id="Lecturer" name="choice1" value="Lecturer">
-          <label for="Lecturer">Lecturer</label><br>
+          <label class="TickBoxText" for="Lecturer">Lecturer</label><br>
           <input type="checkbox" id="Coursework" name="choice2" value="Coursework">
-          <label for="Coursework">coursework</label><br>
+          <label class="TickBoxText" for="Coursework">coursework</label><br>
           <input type="checkbox" id="Facilities" name="choice3" value="Facilities">
-          <label for="Facilities">Facilities</label><br>
+          <label class="TickBoxText" for="Facilities">Facilities</label><br>
           <input type="checkbox" id="other" name="choice4" value="Other">
-          <label for="other">Other</label><br>
+          <label class="TickBoxText" for="other">Other</label><br>
         </form><br>
         <form action="Other option">
           <label for="otherinfo" ><strong> you selected other. Please describe how you would catgeorise your issue</strong></label>
           <input type="text" id="otherinfo" name="otherinfo" style="width:1000px ;">  
         </form><br><br>
-        <h3>Please describe your issue</h3>
+        <h3 class="QuestionsText">Please describe your issue</h3>
         <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
         <button type="Button" class="submitButton" onclick="SaveSubmission()">Submit</button>
         <button type="Button" onclick="SaveSubmission()" style="background-color: cadetblue;"style="height:20px"  >Submit</button>
@@ -180,28 +221,59 @@
         <input type="text" id="Username">
         <p>Password</p>
         <input type="text" id="Password"><br>
-        <button type="Button" onclick="AttemptSignIn()">Sign in</button>
+        <button type="Button" id="SignInButton" onclick="AttemptSignIn()">Sign in</button>
         <p id="SignInResult"></p>
         <hr>
+        <button type="Button" onclick="EditDocumentAfterSuccessfulSignIn()">Test button</button><br>
+        <script>
+          
+        </script>
 
         <div class="aspectwrapper">
           <div class="newscontentblock">
             <center><H1 style="color: azure;">News and updates</H1></center><br>
             <div class="div2">
-              <p style="color: greenyellow;"> Temporary placeholder</p>
+              <p class="NewsTitle" id="Title1">Title 1</p>
+              <p id="Course1">Course:</p>
+              <p id="Categories1">Categories:</p>
+              <p id="Type1">Type:</p>
+              <p id="Stage1">Stage</p>
+              <p id="Description1">Description</p>
             </div>
             <div class="div2">
-              <p style="color: greenyellow;"> Temporary placeholder</p>
+              <p class="NewsTitle" id="Title2">Title 1</p>
+              <p id="Course2">Course:</p>
+              <p id="Categories2">Categories:</p>
+              <p id="Type2">Type:</p>
+              <p id="Stage2">Stage</p>
+              <p id="Description2">Description</p>
             </div>
             <div class="div2">
-              <p style="color: greenyellow;"> Temporary placeholder</p>
+              <p class="NewsTitle" id="Title3">Title 1</p>
+              <p id="Course3">Course:</p>
+              <p id="Categories3">Categories:</p>
+              <p id="Type3">Type:</p>
+              <p id="Stage3">Stage</p>
+              <p id="Description3">Description</p>
             </div>
             <div class="div2">
-              <p style="color: greenyellow;"> Temporary placeholder</p>
+              <p class="NewsTitle" id="Title4">Title 1</p>
+              <p id="Course4">Course:</p>
+              <p id="Categories4">Categories:</p>
+              <p id="Type4">Type:</p>
+              <p id="Stage4">Stage:</p>
+              <p id="Description4">Description</p>
 
             </div>
             
             <p></p>
+            <div class="ButtonBox">
+              <button style="margin-left: 10%;" style="float:left ;" type="button" onclick="LoadLeft()">Later feedback</button>
+              <button style="margin-right:10% ;" style="float:right;" type="button" onclick="LoadRight()">Earlier feedback</button>
+              
+
+            </div>
+            
            
           </div>
         </div>
@@ -219,6 +291,13 @@
   <p id="issueid">IssueType:</p><br>
   <p id="categid">Categories:</p><br>
   <p id="descid">Description:</p><br>
+
+  <div style="width: 50%; float:left ; background-color: aquamarine;">
+                <p> hello</p>
+              </div> 
+              <div style="width: 50%; float:right ; background-color: red;">
+                <p>hello</p>
+              </div> 
   -->
   
   </body>
