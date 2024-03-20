@@ -169,7 +169,7 @@
     <hr>
     <br>
     <div class="aspectwrapper">
-      <div class="MainContentBlock">
+      <div class="MainContentBlock" id="MainBlock">
         <h3 class="QuestionsText">Please select your Course</h3>
         <select class="CourseInput" onclick="SelectCourse()" id="Courseselected">
           <option value="N/A">Please select a course</option>
@@ -212,26 +212,27 @@
         </form><br><br>
         <h3 class="QuestionsText">Please describe your issue</h3>
         <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
-        <button type="Button" class="submitButton" onclick="SaveSubmission()">Submit</button>
-        <button type="Button" onclick="SaveSubmission()" style="background-color: cadetblue;"style="height:20px"  >Submit</button>
-        <br><p id="substatus"><br></p>
+        <button type="Button" class="submitButton" onclick="SaveSubmission()">Submit</button><br><br>
+        <p id="substatus"></p>
         <hr>
-        <h2>Sign in to view reported issues</h2>
-        <h3>Please only sign in if you are a course representative</h3>
-        <p>Username</p>
-        <input type="text" id="Username">
-        <p>Password</p>
-        <input type="text" id="Password"><br>
+        <div id="SignInSection" style="display: block;">
+          <h2>Sign in to view reported issues</h2>
+          <h3>Please only sign in if you are a course representative</h3>
+          <p>Username</p>
+          <input type="text" id="Username">
+          <p>Password</p>
+          <input type="text" id="Password"><br>
+          
+        </div>
         <button type="Button" id="SignInButton" onclick="AttemptSignIn()">Sign in</button>
         <p id="SignInResult"></p>
+        
         <hr>
-        <button type="Button" onclick="EditDocumentAfterSuccessfulSignIn()">Test button</button><br>
-        <script>
-          
-        </script>
+      
+        
 
-        <div class="aspectwrapper">
-          <div class="newscontentblock">
+        <div class="aspectwrapper" style="display:none" id="NewsWrapper">
+          <div class="newscontentblock"> 
             <center><H1 style="color: azure;">News and updates</H1></center><br>
             <div class="div2">
               <p class="NewsTitle" id="Title1">Title 1</p>
@@ -277,6 +278,12 @@
             
            
           </div>
+        </div>
+        <div class="aspectwrapper" style="display:none" id="SubmissionBlock">
+          <div class="MainContentBlock" >
+            <h1> Thank you for submitting feedback</h1>
+            <h2> It will be passed onto course reps </h2>
+          </div>     
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="Script.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content=
@@ -11,7 +12,19 @@
     <h3>
         Go to the console to see the 
         fetched data!!
+
     </h3>
+    <br>First Name: <input id="firstname" value="John">
+    <br>Last Name:<input id="lastname" value="Pavek">
+    <br>Email:<input id="email" value="Example@example.com">
+    <br>
+    <button onclick="convertToJSON()">Convert</button>
+    <button onclick="SaveJson2()">Save</button>
+    <button onclick="OpenJson()"> Open</button>
+
+    
+    <hr> output: <br>
+    <textarea id="output"></textarea>
     <script>
         //function fetchJSONData() {
             
@@ -19,25 +32,11 @@
        //     console.log(typeof dataJson);
          //   console.log(dataJson);
         
-        function fetchJSONData() {
-            const fs = 'fs';
-            const path = 'script.json';
-            const filePath = path.join(process.cwd(), 'test.json');
-            fs.readFile(filePath, 'utf8', (err, contents) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            try {
-                const jsonString = JSON.parse(contents);
-                console.log(jsonString);
-            } catch (jsonError) {
-                console.error('Error parsing JSON');
-            }
-        });
-           
-        }
-        fetchJSONData();
+        
+        //CreateBlob();
+        //CreateURL();
+        //ExtractDataFromBlob();
+        convertToJSON();
     </script>
 </body>
 </html>

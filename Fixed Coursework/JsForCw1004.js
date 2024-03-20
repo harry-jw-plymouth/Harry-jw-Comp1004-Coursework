@@ -1,3 +1,24 @@
+class FeedbackToStore{
+    constructor(Desc,Sta,Cou,Cats,Spread,ID){
+        this.Description=Desc;
+        this.Stage=Sta;
+        this.Course=Cou;
+        this.Categories=Cats;
+        this.SpreadOfIssue=Spread;
+        this.FeedbackId=ID;
+
+    }
+}
+class FeedBacksToStoreTemp{
+    constructor(Desc,sta,Spr,ID,Cats,Cou){
+        this.Description=Desc;
+        this.Stage=sta;
+        this.SpreadOfIssue=Spr;
+        this.FeedbackId=ID;
+        this.Categories=Cats;
+        this.Course=Cou;
+    }
+}
 class Feedback{
     constructor(StartDesription,Startstage,Startcourse,startcategories,startspread,Id)
     {
@@ -160,6 +181,7 @@ var CurrentlySignedIn=false;//bool
 var NoOfSubMissions=0;//int
 var CurrentFeedbackInPosition1=0;//int
 var CurrentFeedbackInPosition4=0;//int
+var Feedbackjson=[];
 
 function SelectStage()
 {
@@ -305,16 +327,16 @@ function SaveSubmission()
         document.getElementById("substatus").innerHTML="Submission successful!";
         CreateFeedBack();
         ResetFields();
+        EditDocumentAfterSubmission();
 
     }
 
-
-    
-    
-
-
-    
-    
+}
+function EditDocumentAfterSubmission (){
+    var MainBlock=document.getElementById("MainBlock");
+    var SubmissionBlock=document.getElementById("SubmissionBlock");
+    //MainBlock.style.display="none";
+    //SubmissionBlock.style.display="block";
 
 }
 function ResetFields(){
@@ -329,11 +351,23 @@ function CreateFeedBack(){
     NewFeedBack.DisplayFeedback();
     ReloadAfterNewSubmission();
     NoOfSubMissions++;
+    SaveFeedbackToJson();
+    //convertToJSON();
    // CurrentlySignedIn=true;
    
 
 
 
+
+}
+function SaveNewFeedbackToJson(){
+    localStorage.setItem("FeedbackRecord", JSON.stringify(Feedbackrecord));
+}
+function SaveFeedbackToJson(){
+    var SavableFeedback=ConvertToStorageVersion(Feedbackrecord);
+    localStorage.setItem("FeedbackRecord",JSON.stringify(SavableFeedback));
+    console.log("Saved to local storage ");
+    //console.log(localStorage.getItem("FeedbackRecord"));
 
 }
 function DisplayALlStages(){
@@ -390,33 +424,253 @@ function SetupDocument(){
     CreateStages();
     CreateCourses();
     CreateAccounts();
+    
+    //ResetJson();
     CreateStartFeedBack();
     CreateNews();
-    
+    //CreateBlob();
+    //CreateJSON();
 }
-function CreateStartFeedBack(){
-    console.log("Creating feedback");
+function CreateFeedbacksToStore(){
+    var FBrecordTemp=[]
     let feedback1=new Feedback("Example description1",Stages[0],Courses[1],["Coursework","lecturer"],"Module wide",FeedbackIndex++);
     let feedback2=new Feedback("Example description2",Stages[1],Courses[2],["Facilities,Coursework"],"Course Wide",FeedbackIndex++);
     let feedback3=new Feedback("Example description3",Stages[3],Courses[3],["Facilities"],"Module Wide",FeedbackIndex++);
     let feedback4=new Feedback("Example description4",Stages[0],Courses[4],["Facilities,Coursework"],"Course Wide",FeedbackIndex++);
     let feedback5=new Feedback("Example description5",Stages[2],Courses[0],["Facilities,Coursework"],"Course Wide",FeedbackIndex++);
-    Feedbackrecord[NoOfSubMissions++]=feedback1;
-    Feedbackrecord[NoOfSubMissions++]=feedback2;
-    Feedbackrecord[NoOfSubMissions++]=feedback3;
-    Feedbackrecord[NoOfSubMissions++]=feedback4;
-    Feedbackrecord[NoOfSubMissions++]=feedback5;
+    FBrecordTemp[NoOfSubMissions++]=feedback1;
+    FBrecordTemp[NoOfSubMissions++]=feedback2;
+    FBrecordTemp[NoOfSubMissions++]=feedback3;
+    FBrecordTemp[NoOfSubMissions++]=feedback4;
+    FBrecordTemp[NoOfSubMissions++]=feedback5;
+    for(i=0;i<FBrecordTemp.length;i++){
+         // console.log("Description: "+FBrecordTemp[i].Description);
+          //console.log("Course: "+ FBrecord[i].Course);
+        //console.log("Stage: "+FBrecordTemp[i].Current_stage.Name);
+          //console.log("Spread : " +FBrecord[i].SpreadOfIssue);
+          //console.log("Categories: "+ FBrecord[i].Categories);
+  
+      }
+    FBrecord=ConvertToStorageVersion(FBrecordTemp);
+    //console.log("End of conversion function");
+    //for(i=0;i<FBrecordTemp.length;i++){
+      //  console.log("Description: "+FBrecord[i].Description);
+        //console.log("Course: "+ FBrecord[i].Course);
+        //console.log("Stage: "+FBrecord[i].Stage);
+        //console.log("Spread : " +FBrecord[i].SpreadOfIssue);
+        //console.log("Categories: "+ FBrecord[i].Categories);
+   // }
+  
+   localStorage.setItem("FeedbackRecord" ,JSON.stringify(FBrecord));
+
+
+
+}
+function ConvertToStorageVersion(FBrecordTemp){
+     var FeedBacksToStore=[];
+    
+    for(i=0;i<FBrecordTemp.length;i++){
+        console.log("Description: "+FBrecordTemp[i].Description);
+        
+       // console.log("Course: "+ FBrecordTemp[i].Course);
+        //console.log("Stage: "+FBrecordTemp[i].Current_stage.Name);
+        //console.log("Spread : " +FBrecordTemp[i].SpreadOfIssue);
+        //console.log("Categories: "+ FBrecordTemp[i].Categories);
+
+    }
+    let EmptyFeedback=new FeedbackToStore("N/A","N/A","N/A",[],"",0);
+    for(i=0;i<FBrecordTemp.length;i++){
+        
+        
+    
+        
+        
+
+        
+
+    }
+    var FeedbackToStoreTemporary=[];
+    var Description;
+    var StageSelectedString;
+    var TempStage;
+    var TempSpread;
+    var TempId;
+    var TempCats;
+    var TempCourse;
+    var CourseName;
+    for(i=0;i<FBrecordTemp.length;i++){
+        Description=FBrecordTemp[i].Description;
+        TempSpread=FBrecordTemp[i].SpreadOfIssue;
+        TempId=FBrecordTemp[i].FeedbackId;
+        TempCats=FBrecordTemp[i].Categories;
+        TempStage=FBrecordTemp[i].Current_stage.Name;
+        //console.log("Temp Current stage: "+ TempStage);
+        if(TempStage=="Stage1")
+        {
+            //console.log("Stage 1 selected");
+            StageSelectedString="Stage1";
+        }
+        else if(TempStage=="Stage2")
+        {
+            //console.log("Stage 2 selected");
+            StageSelectedString="Stage2";
+        }
+        else if(TempStage=="Final Stage")
+        {
+          //  console.log("Final stage selected");
+            StageSelectedString="Final Stage";
+        }
+        else if(TempStage=="Placemant year")
+        {
+        //    console.log("Placement year selected");
+            StageSelectedString="Placemant year";
+        }
+        CourseName=FBrecordTemp[i].Course.name;
+        if(CourseName=="Computer Science"){
+            TempCourse="Computer Science";
+        }
+        else if(CourseName=="Computer Science(Software engineering)"){
+            TempCourse="Computer Science(Software engineering)";
+        }
+        else if(CourseName=="Computer Science(Games Development)"){
+            TempCourse="Computer Science(Games Development)";
+        }
+        if(CourseName=="Computer Science(Artificial intelligence)"){
+            TempCourse="Computer Science(Artificial intelligence)";
+        }
+        if(CourseName=="Computer Science(Cyber Security)"){
+            TempCourse="Computer Science(Cyber Security)";
+        }
+        
+
+        let CurrentFeedback=new FeedBacksToStoreTemp(Description,StageSelectedString,TempSpread,TempId,TempCats,TempCourse);
+        FeedbackToStoreTemporary[i]=CurrentFeedback;
+    }
+    for(i=0;i<FeedbackToStoreTemporary.length;i++){
+
+        //Description=FeedBacksToStore.;
+        console.log("Iteration "+ i);
+        console.log("Description: "+FeedbackToStoreTemporary[i].Description);
+        console.log("Stage: "+FeedbackToStoreTemporary[i].Stage);
+        console.log("Spread : " +FeedbackToStoreTemporary[i].SpreadOfIssue);
+        console.log("id : "+ FeedbackToStoreTemporary[i].FeedbackId);
+        console.log("Categories : "+FeedbackToStoreTemporary[i].Categories);
+        console.log("Course: "+ FeedbackToStoreTemporary[i].Course);
+
+        
+        //console.log("Categories: "+ FeedBacksToStore[i].Categories);
+
+    }
+    return FeedbackToStoreTemporary;
+}
+function ResetJson(){
+    localStorage.clear("FeedbackRecord");
+    CreateFeedbacksToStore();
+    
+}
+function CreateStartFeedBack(){
+    console.log("Creating feedback");
+    //let feedback1=new Feedback("Example description1",Stages[0],Courses[1],["Coursework","lecturer"],"Module wide",FeedbackIndex++);
+    //let feedback2=new Feedback("Example description2",Stages[1],Courses[2],["Facilities,Coursework"],"Course Wide",FeedbackIndex++);
+    //let feedback3=new Feedback("Example description3",Stages[3],Courses[3],["Facilities"],"Module Wide",FeedbackIndex++);
+    //let feedback4=new Feedback("Example description4",Stages[0],Courses[4],["Facilities,Coursework"],"Course Wide",FeedbackIndex++);
+    //let feedback5=new Feedback("Example description5",Stages[2],Courses[0],["Facilities,Coursework"],"Course Wide",FeedbackIndex++);
+    //Feedbackrecord[NoOfSubMissions++]=feedback1;
+    //Feedbackrecord[NoOfSubMissions++]=feedback2;
+    //Feedbackrecord[NoOfSubMissions++]=feedback3;
+    //Feedbackrecord[NoOfSubMissions++]=feedback4;
+    //Feedbackrecord[NoOfSubMissions++]=feedback5;
+    let EmptyFeedback=new Feedback("Example description5",Stages[0],Courses[0],["Facilities,Coursework"],"Course Wide",0);
+
+    TempFeedbackrecord=JSON.parse(localStorage.getItem("FeedbackRecord"));
+    console.log("Feedback Created");
+    for(i=0;i<TempFeedbackrecord.length;i++){
+        console.log("FeedbackId:" + TempFeedbackrecord[i].FeedbackId);
+        console.log("Description: "+ TempFeedbackrecord[i].Description);
+        console.log("Stage: "+ TempFeedbackrecord[i].Stage);
+        console.log("Course:" + TempFeedbackrecord[i].Course);
+        console.log("Spread: "+ TempFeedbackrecord[i].SpreadOfIssue);
+        console.log("Categories:" + TempFeedbackrecord[i].Categories);
+        console.log( " ");
+    }
+    NoOfSubMissions=TempFeedbackrecord.length;
+    FeedbackIndex=TempFeedbackrecord.length;
+    Feedbackrecord=ConvertFromStorageVersionToUsable(TempFeedbackrecord);
+    
+   // console.log(TempFeedbackrecord);
+    
+    
     
 
 
-    Feedbackrecord[0].DisplayFeedback();
-    console.log(Feedbackrecord.length+":Length");
-    for(i=0;i<Feedbackrecord.length;i++){
-       // Feedbackrecord[i].DisplayFeedback();
-        console.log(i);
-    }
     //Hardcoded classes will be replaced with json at a later point
 
+
+}
+function ConvertFromStorageVersionToUsable(FeedbackToConvert){
+    var convertedFeedback=[];
+    var Description;
+    var FeedbackId;
+    var Spread;
+    var Categories;
+    var stage;
+    var StageName;
+    var CourseName;
+    var course;
+    for(i=0;i< FeedbackToConvert.length;i++){
+        Description=FeedbackToConvert[i].Description;
+        FeedbackId=FeedbackToConvert[i].FeedbackId;
+        Spread=FeedbackToConvert[i].SpreadOfIssue;
+        Categories=FeedbackToConvert[i].Categories;
+        StageName=FeedbackToConvert[i].Stage;
+        if(StageName=="Stage1"){
+            stage=Stages[0];
+        }
+        else if(StageName=="Stage2"){
+            stage=Stages[1];
+        }
+        else if(StageName=="Final Stage"){
+            stage=Stages[2];
+        }
+        else if(StageName=="Placemant year"){
+            stage=Stages[3];
+        } 
+        CourseName=FeedbackToConvert[i].Course;
+        if(CourseName=="Computer Science"){
+            course=Courses[0];
+        }
+        else if(CourseName=="Computer Science(Software engineering)"){
+            course=Courses[1];
+        }
+        else if(CourseName=="Computer Science(Games Development)"){
+            course=Courses[2];
+        }
+        else if(CourseName=="Computer Science(Artificial intelligence)"){
+            course=Courses[3];
+        }
+        else if(CourseName=="Computer Science(Cyber Security)"){
+            course=Courses[4];
+        }
+
+
+
+        
+        let CurrentFeedback=new Feedback(Description,stage,course,Categories,Spread, FeedbackId);
+        convertedFeedback[i]=CurrentFeedback;
+    }
+    
+    for(i =0;i<convertedFeedback.length;i++){
+        console.log (" Description: "+convertedFeedback[i].Description);
+        console.log("FeedbackId: " + convertedFeedback[i].FeedbackId);
+        console.log("Spread: " + convertedFeedback[i].SpreadOfIssue);
+        console.log("Categories: " + convertedFeedback[i].Categories);
+        console.log("Stage: "+convertedFeedback[i].Current_stage.Name);
+        console.log("Course: "+convertedFeedback[i].Course.name);
+
+        console.log("");
+
+    }
+    return convertedFeedback;
 
 }
 function CreateNews(){
@@ -470,7 +724,7 @@ function CreateNews(){
         document.getElementById("Stage1").innerHTML="Stage:"+Feedbackrecord[NoOfSubMissions-1].GetStage().GetName();
         document.getElementById("Description1").innerHTML="Description:"+Feedbackrecord[NoOfSubMissions-1].GetDescription();
         document.getElementById("Type1").innerHTML="Type:"+Feedbackrecord[NoOfSubMissions-1].GetSpreadOfIssue();
-        CurrentCats=Feedbackrecord[0+NoOfSubMissions-1].GetCategories();
+        CurrentCats=Feedbackrecord[0+NoOfSubMissions-1].Categories;
         if(CurrentCats.length==1){
             Tempstr="Category:"+CurrentCats[0];
         }
@@ -490,7 +744,7 @@ function CreateNews(){
         document.getElementById("Stage2").innerHTML="Stage:"+Feedbackrecord[NoOfSubMissions-2].GetStage().GetName();
         document.getElementById("Description2").innerHTML="Description:"+Feedbackrecord[NoOfSubMissions-2].GetDescription();
         document.getElementById("Type2").innerHTML="Type:"+Feedbackrecord[NoOfSubMissions-2].GetSpreadOfIssue();
-        CurrentCats=Feedbackrecord[NoOfSubMissions-2].GetCategories();
+        CurrentCats=Feedbackrecord[NoOfSubMissions-2].Categories;
         if(CurrentCats.length==1){
             Tempstr="Category:"+CurrentCats[0];
         }
@@ -510,7 +764,7 @@ function CreateNews(){
         document.getElementById("Stage3").innerHTML="Stage:"+Feedbackrecord[NoOfSubMissions-3].GetStage().GetName();
         document.getElementById("Description3").innerHTML="Description:"+Feedbackrecord[NoOfSubMissions-3].GetDescription();
         document.getElementById("Type3").innerHTML="Type:"+Feedbackrecord[NoOfSubMissions-3].GetSpreadOfIssue();
-        CurrentCats=Feedbackrecord[NoOfSubMissions-3].GetCategories();
+        CurrentCats=Feedbackrecord[NoOfSubMissions-3].Categories;
         if(CurrentCats.length==1){
             Tempstr="Category:"+CurrentCats[0];
         }
@@ -532,7 +786,7 @@ function CreateNews(){
         document.getElementById("Stage4").innerHTML="Stage:"+Feedbackrecord[NoOfSubMissions-4].GetStage().GetName();
         document.getElementById("Description4").innerHTML="Description:"+Feedbackrecord[NoOfSubMissions-4].GetDescription();
         document.getElementById("Type4").innerHTML="Type:"+Feedbackrecord[NoOfSubMissions-4].GetSpreadOfIssue();
-        CurrentCats=Feedbackrecord[NoOfSubMissions-4].GetCategories();
+        CurrentCats=Feedbackrecord[NoOfSubMissions-4].Categories;
         if(CurrentCats.length==1){
             Tempstr="Category:"+CurrentCats[0];
         }
@@ -652,7 +906,7 @@ function LoadLeft(){
     document.getElementById("Stage1").innerHTML="Stage:"+Feedbackrecord[CurrentFeedbackInPosition1].GetStage().GetName();
     document.getElementById("Description1").innerHTML="Description:"+Feedbackrecord[CurrentFeedbackInPosition1].GetDescription();
     document.getElementById("Type1").innerHTML="Type:"+Feedbackrecord[CurrentFeedbackInPosition1].GetSpreadOfIssue();
-    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1].GetCategories();
+    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1].Categories;
     if(CurrentCats.length==1){
         Tempstr="Category:"+CurrentCats[0];
     }
@@ -669,7 +923,7 @@ function LoadLeft(){
     document.getElementById("Stage2").innerHTML="Stage:"+Feedbackrecord[CurrentFeedbackInPosition1-1].GetStage().GetName();
     document.getElementById("Description2").innerHTML="Description:"+Feedbackrecord[CurrentFeedbackInPosition1-1].GetDescription();
     document.getElementById("Type2").innerHTML="Type:"+Feedbackrecord[CurrentFeedbackInPosition1-1].GetSpreadOfIssue();
-    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1-1].GetCategories();
+    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1-1].Categories;
     if(CurrentCats.length==1){
         Tempstr="Category:"+CurrentCats[0];
     }
@@ -686,7 +940,7 @@ function LoadLeft(){
     document.getElementById("Stage3").innerHTML="Stage:"+Feedbackrecord[CurrentFeedbackInPosition1-2].GetStage().GetName();
     document.getElementById("Description3").innerHTML="Description:"+Feedbackrecord[CurrentFeedbackInPosition1-2].GetDescription();
     document.getElementById("Type3").innerHTML="Type:"+Feedbackrecord[CurrentFeedbackInPosition1-2].GetSpreadOfIssue();
-    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1-2].GetCategories();
+    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1-2].Categories;
     if(CurrentCats.length==1){
         Tempstr="Category:"+CurrentCats[0];
     }
@@ -703,7 +957,7 @@ function LoadLeft(){
     document.getElementById("Stage4").innerHTML="Stage:"+Feedbackrecord[CurrentFeedbackInPosition4].GetStage().GetName();
     document.getElementById("Description4").innerHTML="Description:"+Feedbackrecord[CurrentFeedbackInPosition4].GetDescription();
     document.getElementById("Type4").innerHTML="Type:"+Feedbackrecord[CurrentFeedbackInPosition4].GetSpreadOfIssue();
-    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition4].GetCategories();
+    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition4].Categories;
     if(CurrentCats.length==1){
         Tempstr="Category:"+CurrentCats[0];
     }
@@ -736,7 +990,7 @@ function LoadRight(){
     document.getElementById("Stage1").innerHTML="Stage:"+Feedbackrecord[CurrentFeedbackInPosition1].GetStage().GetName();
     document.getElementById("Description1").innerHTML="Description:"+Feedbackrecord[CurrentFeedbackInPosition1].GetDescription();
     document.getElementById("Type1").innerHTML="Type:"+Feedbackrecord[CurrentFeedbackInPosition1].GetSpreadOfIssue();
-    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1].GetCategories();
+    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1].Categories;
     if(CurrentCats.length==1){
         Tempstr="Category:"+CurrentCats[0];
     }
@@ -753,7 +1007,7 @@ function LoadRight(){
     document.getElementById("Stage2").innerHTML="Stage:"+Feedbackrecord[CurrentFeedbackInPosition1-1].GetStage().GetName();
     document.getElementById("Description2").innerHTML="Description:"+Feedbackrecord[CurrentFeedbackInPosition1-1].GetDescription();
     document.getElementById("Type2").innerHTML="Type:"+Feedbackrecord[CurrentFeedbackInPosition1-1].GetSpreadOfIssue();
-    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1-1].GetCategories();
+    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1-1].Categories;
     if(CurrentCats.length==1){
         Tempstr="Category:"+CurrentCats[0];
     }
@@ -770,7 +1024,7 @@ function LoadRight(){
     document.getElementById("Stage3").innerHTML="Stage:"+Feedbackrecord[CurrentFeedbackInPosition1-2].GetStage().GetName();
     document.getElementById("Description3").innerHTML="Description:"+Feedbackrecord[CurrentFeedbackInPosition1-2].GetDescription();
     document.getElementById("Type3").innerHTML="Type:"+Feedbackrecord[CurrentFeedbackInPosition1-2].GetSpreadOfIssue();
-    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1-2].GetCategories();
+    CurrentCats=Feedbackrecord[CurrentFeedbackInPosition1-2].Categories;
     if(CurrentCats.length==1){
         Tempstr="Category:"+CurrentCats[0];
     }
@@ -893,6 +1147,10 @@ function ReloadAfterNewSubmission(){
 
 }
 function AttemptSignIn(){
+    var NewsSection=document.getElementById("NewsWrapper");
+    var Signinsection=document.getElementById("SignInSection");
+    var Username=document.getElementById("Username")
+    var Password=document.getElementById("Password");
     console.log("Attempting sign in");
     if(CurrentlySignedIn){
         console.log("Already signed in,signing out");
@@ -900,6 +1158,11 @@ function AttemptSignIn(){
         CreateNews();
         document.getElementById("SignInButton").innerHTML="Sign in";
         document.getElementById("SignInResult").innerHTML="Signed out";
+        NewsSection.style.display="none";
+        Username.style.display="block";
+        Password.style.display="block";
+        Signinsection.style.display="block";
+
         
         return;
     }
@@ -919,6 +1182,10 @@ function AttemptSignIn(){
             document.getElementById("SignInButton").innerHTML="Sign out";
             document.getElementById("Username").value='';
             document.getElementById("Password").value='';
+            NewsSection.style.display="block";
+            Password.style.display="none";
+            Username.style.display="none";
+            Signinsection.style.display="none";
 
         }
         else{
@@ -934,3 +1201,160 @@ function AttemptSignIn(){
 
     
 }
+function CreateBlob(){
+    console.log("Creating blob");
+
+    const obj = {"hellos":[{hello: "world",Number:1},{hello:"again",Number:2}] };
+    blob = new Blob([JSON.stringify(obj, null, 2)], {
+    type: "application/json",});
+
+}
+function CreateURL(){
+    if (!showViewLiveResultButton()) {
+        function typedArrayToURL(typedArray, mimeType) {
+          return URL.createObjectURL(
+            new Blob([typedArray.buffer], { type: mimeType }),
+          );
+        }
+        const bytes = new Uint8Array(59);
+      
+        for (let i = 0; i < 59; i++) {
+          bytes[i] = 32 + i;
+        }
+        const url = typedArrayToURL(bytes, "text/plain");
+        
+        const link = document.createElement("a");
+        link.href = url;
+        link.innerText = "Open the array URL";
+        document.body.appendChild(link);
+    }
+    
+  }
+  function showViewLiveResultButton() {
+    if (window.self !== window.top) {
+      // Ensure that if our document is in a frame, we get the user
+      // to first open it in its own tab or window. Otherwise, this
+      // example won't work.
+      const p = document.querySelector("p");
+      p.textContent = "";
+      const button = document.createElement("button");
+      button.textContent = "View live result of the example code above";
+      p.append(button);
+      button.addEventListener("click", () => window.open(location.href));
+      return true;
+    }
+    return false;
+  }
+  async function ExtractDataFromBlob(){
+    const reader = new FileReader();
+    reader.addEventListener("loadend", () => {
+        // reader.result contains the contents of blob as a typed array
+    });
+    reader.readAsArrayBuffer(blob);
+    const text=await new Response(blob).text();
+    console.log(text);
+}
+function CreateJSON() {
+   
+  
+    // var jsonObject = {
+      // "Description":Feedbackrecord[FeedbackIndex-1].GetDescription(),
+       //"Current_stage":Feedbackrecord[FeedbackIndex-1].GetStage(),
+       //"Course": Feedbackrecord[FeedbackIndex-1].GetCourse(),
+       //"Categories": Feedbackrecord[FeedbackIndex-1].GetCategories(),
+       //"SpreadOfIssue": Feedbackrecord[FeedbackIndex-1].GetSpreadOfIssue(),
+       //"FeedbackId": Feedbackrecord[FeedbackIndex-1].GetFeedbackId()
+     //}
+     
+     var CurrentObject;
+     for(i=0;i<Feedbackrecord.length;i++){
+         CurrentObject={
+             "Description":Feedbackrecord[FeedbackIndex-1].GetDescription(),
+             "Current_stage":Feedbackrecord[FeedbackIndex-1].GetStage(),
+             "Course": Feedbackrecord[FeedbackIndex-1].GetCourse(),
+             "Categories": Feedbackrecord[FeedbackIndex-1].GetCategories(),
+             "SpreadOfIssue": Feedbackrecord[FeedbackIndex-1].GetSpreadOfIssue(),
+             "FeedbackId": Feedbackrecord[FeedbackIndex-1].GetFeedbackId()
+ 
+         }
+         Feedbackjson[i]=CurrentObject;
+ 
+     }
+   
+     console.log(JSON.stringify(Feedbackjson));
+ }
+function convertToJSON() {
+   
+  
+    var CurrentObject = {
+      "Description":Feedbackrecord[FeedbackIndex-1].GetDescription(),
+      "Current_stage":Feedbackrecord[FeedbackIndex-1].GetStage(),
+      "Course": Feedbackrecord[FeedbackIndex-1].GetCourse(),
+      "Categories": Feedbackrecord[FeedbackIndex-1].GetCategories(),
+      "SpreadOfIssue": Feedbackrecord[FeedbackIndex-1].GetSpreadOfIssue(),
+      "FeedbackId": Feedbackrecord[FeedbackIndex-1].GetFeedbackId()
+    }
+   // var jsonObject=[];
+    //var CurrentObject;
+    //for(i=0;i<Feedbackrecord.length;i++){
+      //  CurrentObject={
+        //    "Description":Feedbackrecord[FeedbackIndex-1].GetDescription(),
+          //  "Current_stage":Feedbackrecord[FeedbackIndex-1].GetStage(),
+            //"Course": Feedbackrecord[FeedbackIndex-1].GetCourse(),
+            //"Categories": Feedbackrecord[FeedbackIndex-1].GetCategories(),
+            //"SpreadOfIssue": Feedbackrecord[FeedbackIndex-1].GetSpreadOfIssue(),
+            //"FeedbackId": Feedbackrecord[FeedbackIndex-1].GetFeedbackId()
+
+//        }
+  //      jsonObject[i]=CurrentObject;
+
+    //}
+    Feedbackjson[FeedbackIndex-1]=CurrentObject;
+    console.log(JSON.stringify(Feedbackjson));
+}
+function saveToFile() {
+    //ReadJSONText(); 
+   convertToJSON();
+   var jsonObjectAsString = document.getElementById('output').value;
+ 
+   var blob = new Blob([jsonObjectAsString], {
+     //type: 'application/json'
+     type: 'octet/stream'
+   });
+   console.log(blob);
+ 
+   var anchor = document.createElement('a')
+   anchor.download = "user.json";
+   anchor.href = window.URL.createObjectURL(blob);
+   anchor.innerHTML = "download"
+   anchor.click();
+ 
+   console.log(anchor);
+ 
+   document.getElementById('output').append(anchor)
+ 
+ 
+ }
+ function FinishAndSave(){
+    SaveFeedbackToJson();
+ }
+ function FinishAndSave2(){
+    console.log("Finishing and saving");
+    var jsonObjectAsString=JSON.stringify(Feedbackjson);
+
+    var blob = new Blob([jsonObjectAsString], {
+        //type: 'application/json'
+        type: 'octet/stream'
+    });
+    console.log(blob);
+    var anchor = document.createElement('a');
+    //anchor.saveToFile="feedback.json";
+    anchor.download="feedback.json"
+    
+    anchor.href=window.URL.createObjectURL(blob);
+    anchor.click();
+    console.log(anchor);
+    //document.getElementById('output').append(anchor)
+
+    document.close;
+ }
