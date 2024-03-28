@@ -150,12 +150,6 @@ class Account{
         this.UserName=UN;//string
         this.Password=PW;//string
     }
-    GetUserName(){
-        return this.UserName;
-    }
-    GetPassWord(){
-        return this.Password;
-    }
 }
 var EarliestCurrentFeedback;//int
 var LatestCurrentFeedback;//int
@@ -228,32 +222,25 @@ function SelectCategories()
 {
     var EmptyArray=[];
     SelectedCategories=EmptyArray;
-    console.log("Function Called");
     var Catsindex=0;
     var LecturerChecked=document.getElementById("Lecturer");
     if(LecturerChecked.checked==true)
     {
-        //console.log("Lecturer checked");
         CategoriesSelected[Catsindex++]=document.getElementById("Lecturer").value;
     }
     var CourseworkChecked=document.getElementById("Coursework");
     if(CourseworkChecked.checked==true)
     {
-        //console.log("Coursework checked");
         CategoriesSelected[Catsindex++]=document.getElementById("Coursework").value;
     }
     var FacilitiesChecked=document.getElementById("Facilities");
     if(FacilitiesChecked.checked==true)
     {
-        //console.log("Facilities checked");
         CategoriesSelected[Catsindex++]=document.getElementById("Facilities").value;
     }
     var otherChecked=document.getElementById("other");
     if(otherChecked.checked==true)
     {
-        //console.log("other checked");
-        //CategoriesSelected[Catsindex++]=document.getElementById("other").value;
-        
         var OtherSelection=document.getElementById("otherinfo").value;
         if(OtherSelection==""){
             document.getElementById("substatus").innerHTML="Other selection made but no description submitted";
@@ -300,23 +287,12 @@ function SelectCourse()
 }
 function SaveSubmission()
 {
-    console.log("Saving submission");
     SelectCourse();
-    console.log("Course selected:"+SelectedCourse.GetName());
-    console.log("Selecting Stage");
     SelectStage();
-    console.log("Selected stage:"+SelectedStage.GetName());
-    console.log("Selecting Spread");
     SelectSpread();
-    console.log("Selected Spread:"+SelectedSpread);
-    console.log("Selecting categories");
     SelectCategories();
-    for(i=0;i<CategoriesSelected.length;i++){
-        console.log(CategoriesSelected[i] +" selected");
-    }
-    console.log("selecting description");
     SaveDescription();
-    console.log("Issue description:" + IssueDescription);
+
 
     console.log("Checking if all fields correctly filled");
     if(CheckInputs()){
@@ -327,7 +303,7 @@ function SaveSubmission()
         document.getElementById("substatus").innerHTML="Submission successful!";
         CreateFeedBack();
         ResetFields();
-        EditDocumentAfterSubmission();
+        //EditDocumentAfterSubmission();
 
     }
 
@@ -354,11 +330,6 @@ function CreateFeedBack(){
     SaveFeedbackToJson();
     //convertToJSON();
    // CurrentlySignedIn=true;
-   
-
-
-
-
 }
 function SaveNewFeedbackToJson(){
     localStorage.setItem("FeedbackRecord", JSON.stringify(Feedbackrecord));
@@ -378,7 +349,6 @@ function DisplayALlStages(){
 
 }
 function CheckInputs(){
-    //var IssueFound=false;//bool
     if(SelectedCourse.GetIfEmpty())
     {
         console.log("No Course selected");
@@ -585,13 +555,13 @@ function CreateStartFeedBack(){
     TempFeedbackrecord=JSON.parse(localStorage.getItem("FeedbackRecord"));
     console.log("Feedback Created");
     for(i=0;i<TempFeedbackrecord.length;i++){
-        console.log("FeedbackId:" + TempFeedbackrecord[i].FeedbackId);
-        console.log("Description: "+ TempFeedbackrecord[i].Description);
-        console.log("Stage: "+ TempFeedbackrecord[i].Stage);
-        console.log("Course:" + TempFeedbackrecord[i].Course);
-        console.log("Spread: "+ TempFeedbackrecord[i].SpreadOfIssue);
-        console.log("Categories:" + TempFeedbackrecord[i].Categories);
-        console.log( " ");
+        //console.log("FeedbackId:" + TempFeedbackrecord[i].FeedbackId);
+        //console.log("Description: "+ TempFeedbackrecord[i].Description);
+        //console.log("Stage: "+ TempFeedbackrecord[i].Stage);
+        //console.log("Course:" + TempFeedbackrecord[i].Course);
+        //console.log("Spread: "+ TempFeedbackrecord[i].SpreadOfIssue);
+        //console.log("Categories:" + TempFeedbackrecord[i].Categories);
+        //console.log( " ");
     }
     NoOfSubMissions=TempFeedbackrecord.length;
     FeedbackIndex=TempFeedbackrecord.length;
@@ -717,7 +687,7 @@ function CreateNews(){
     else if(Feedbackrecord.length>0){
         EarliestCurrentFeedback=0;
         console.log("Setting up news1");
-        console.log("NoOfSubmissions:"+NoOfSubMissions+" Feedbackrecordlength:"+Feedbackrecord.length);
+        //console.log("NoOfSubmissions:"+NoOfSubMissions+" Feedbackrecordlength:"+Feedbackrecord.length);
         CurrentFeedbackInPosition1=NoOfSubMissions-1;
         document.getElementById("Title1").innerHTML="Title:Feedback "+Feedbackrecord[NoOfSubMissions-1].GetFeedbackId();
         document.getElementById("Course1").innerHTML="Course:"+Feedbackrecord[NoOfSubMissions-1].GetCourse().GetName();
@@ -802,15 +772,16 @@ function CreateNews(){
 
 }
 function CreateAccounts(){
-    console.log("Creating accounts");
-    let Account1=new Account("Harry.watton","password1");
-    let Account2=new Account("Harry2","Password2");
-    let Account3=new Account("Jarry3","password3");
-    accounts[0]=Account1;
-    accounts[1]=Account2;
-    accounts[2]=Account3;
+    //console.log("Creating accounts");
+    //let Account1=new Account("Account1","password1");
+    ///let Account2=new Account("Account2","password2");
+    //let Account3=new Account("Account3","password3");
+    //accounts[0]=Account1;
+    //accounts[1]=Account2;
+    //accounts[2]=Account3;
+   // localStorage.setItem("Accounts",JSON.stringify(accounts));
 
-    //will be replaced with JSON
+    accounts=JSON.parse(localStorage.getItem("Accounts"));
 }
 function CreateStages(){
     let Stage1=new Stage("Stage1",1,"1");
@@ -868,7 +839,7 @@ function GetStatusOfFeedbacksForPage(){
 function UserNameFound(UserName){
     console.log("Finding Username");
     for(i=0;i<accounts.length;i++){
-        if(UserName==accounts[i].GetUserName()){
+        if(UserName==accounts[i].UserName){
             return true;
         }
     }
@@ -877,7 +848,7 @@ function UserNameFound(UserName){
 }
 function GetAccount(UserName){
     for(i=0;i<accounts.length;i++){
-        if(UserName==accounts[i].GetUserName()){
+        if(UserName==accounts[i].UserName){
             return accounts[i];
         }
     }
@@ -1173,7 +1144,7 @@ function AttemptSignIn(){
     
     if(UserNameFound(UsernameSelected)){
         var CurrentAccount=GetAccount(UsernameSelected);
-        if(CurrentAccount.GetPassWord()==PasswordSelected){
+        if(CurrentAccount.Password==PasswordSelected){
             console.log("Sign in succesful");
             document.getElementById("SignInResult").innerHTML="Sign in succesful";
             //EditDocumentAfterSuccessfulSignIn();

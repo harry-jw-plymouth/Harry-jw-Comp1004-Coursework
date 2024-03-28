@@ -4,6 +4,17 @@ class JsonTes{
 
     }
 }
+class FeedbackToStore{
+  constructor(Desc,Sta,Cou,Cats,Spread,ID){
+      this.Description=Desc;
+      this.Stage=Sta;
+      this.Course=Cou;
+      this.Categories=Cats;
+      this.SpreadOfIssue=Spread;
+      this.FeedbackId=ID;
+
+  }
+}
  var blob;
 function CreateBlob(){
     console.log("Creating blob");
