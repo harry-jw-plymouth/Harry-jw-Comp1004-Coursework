@@ -151,6 +151,8 @@ class Account{
         this.Password=PW;//string
     }
 }
+var TextWhenSignedIn="You are currently signed in. Below is a selection of all submitted issues for you to browse.";
+var TextWhenSignedOut="Use this form to report any issues you may be having with courses,lecturers, the Univeristy or any other issues you may have ecountered.<br> All issues reported will be completlely anonymous. Neither course representatives or lecturers will know that you were the one to report an issue meaning you can feel free to report any issued you may be having.";//string
 var EarliestCurrentFeedback;//int
 var LatestCurrentFeedback;//int
 var Stages=[];
@@ -221,7 +223,7 @@ function SaveOtherDescription(){
 function SelectCategories()
 {
     var EmptyArray=[];
-    SelectedCategories=EmptyArray;
+    CategoriesSelected=EmptyArray;
     var Catsindex=0;
     var LecturerChecked=document.getElementById("Lecturer");
     if(LecturerChecked.checked==true)
@@ -254,6 +256,10 @@ function SelectCategories()
     else{
         document.getElementById("substatus").innerHTML="";
     }
+    for(i=0;i<CategoriesSelected.length;i++){
+        console.log(CategoriesSelected[i]);
+    }
+    console.log();
 
     
 
@@ -320,13 +326,22 @@ function ResetFields(){
     document.getElementById("IssueDescription").value="";
 
 }
+function DisplayCategories(){
+    console.log("Categories: ")
+    for(i=0;i<CategoriesSelected.length;i++){
+        console.log(CategoriesSelected[i]+" ")
+    }
+    console.log();
+}
 function CreateFeedBack(){
     console.log("Saving inputs to feedback class");
-    let NewFeedBack=new Feedback(IssueDescription,SelectedStage,SelectedCourse,SelectedCategories,SelectedSpread,FeedbackIndex++);
+    DisplayCategories();
+    let NewFeedBack=new Feedback(IssueDescription,SelectedStage,SelectedCourse,CategoriesSelected,SelectedSpread,FeedbackIndex++);
     Feedbackrecord[FeedbackIndex-1]=NewFeedBack;
     NewFeedBack.DisplayFeedback();
     ReloadAfterNewSubmission();
     NoOfSubMissions++;
+
     SaveFeedbackToJson();
     //convertToJSON();
    // CurrentlySignedIn=true;
@@ -335,6 +350,7 @@ function SaveNewFeedbackToJson(){
     localStorage.setItem("FeedbackRecord", JSON.stringify(Feedbackrecord));
 }
 function SaveFeedbackToJson(){
+    console.log(Feedbackrecord.length);
     var SavableFeedback=ConvertToStorageVersion(Feedbackrecord);
     localStorage.setItem("FeedbackRecord",JSON.stringify(SavableFeedback));
     console.log("Saved to local storage ");
@@ -438,7 +454,7 @@ function CreateFeedbacksToStore(){
 }
 function ConvertToStorageVersion(FBrecordTemp){
      var FeedBacksToStore=[];
-    
+    console.log(FBrecordTemp.length);
     for(i=0;i<FBrecordTemp.length;i++){
         console.log("Description: "+FBrecordTemp[i].Description);
         
@@ -555,13 +571,13 @@ function CreateStartFeedBack(){
     TempFeedbackrecord=JSON.parse(localStorage.getItem("FeedbackRecord"));
     console.log("Feedback Created");
     for(i=0;i<TempFeedbackrecord.length;i++){
-        //console.log("FeedbackId:" + TempFeedbackrecord[i].FeedbackId);
-        //console.log("Description: "+ TempFeedbackrecord[i].Description);
-        //console.log("Stage: "+ TempFeedbackrecord[i].Stage);
-        //console.log("Course:" + TempFeedbackrecord[i].Course);
-        //console.log("Spread: "+ TempFeedbackrecord[i].SpreadOfIssue);
-        //console.log("Categories:" + TempFeedbackrecord[i].Categories);
-        //console.log( " ");
+        console.log("FeedbackId:" + TempFeedbackrecord[i].FeedbackId);
+        console.log("Description: "+ TempFeedbackrecord[i].Description);
+        console.log("Stage: "+ TempFeedbackrecord[i].Stage);
+        console.log("Course:" + TempFeedbackrecord[i].Course);
+        console.log("Spread: "+ TempFeedbackrecord[i].SpreadOfIssue);
+        console.log("Categories:" + TempFeedbackrecord[i].Categories);
+        console.log( " ");
     }
     NoOfSubMissions=TempFeedbackrecord.length;
     FeedbackIndex=TempFeedbackrecord.length;
@@ -643,11 +659,22 @@ function ConvertFromStorageVersionToUsable(FeedbackToConvert){
     return convertedFeedback;
 
 }
+function IsATempFeedBack(){
+
+    if(Feedbackrecord[0].Description=="N/A"){
+        return true;
+    }
+    return false;
+}
 function CreateNews(){
     console.log("Setting up news");
     var CurrentCats=[];
     var Tempstr;
     LatestCurrentFeedback=0;
+    for(i=0;i<Feedbackrecord.length;i++){
+        Feedbackrecord[i].DisplayFeedback();
+    }
+    
     if(!CurrentlySignedIn){
         console.log("NO news to show as no sign in");
         document.getElementById("Title1").innerHTML="Title:Sign in to view feedback";
@@ -679,12 +706,39 @@ function CreateNews(){
         document.getElementById("Categories4").innerHTML="Categories:Sign in to view feedback";
         return;
     }
-    if(Feedbackrecord.length==0){
+    else{
         console.log("No Feedback to set up with");
-        
+        document.getElementById("Title1").innerHTML="Title:No Current feedback in this box";
+        document.getElementById("Course1").innerHTML="Course:No Current feedback in this box";
+        document.getElementById("Stage1").innerHTML="Stage:No Current feedback in this box";
+        document.getElementById("Description1").innerHTML="Description:No Current feedback in this box";
+        document.getElementById("Type1").innerHTML="Type:No Current feedback in this box";
+        document.getElementById("Categories1").innerHTML="Categories:No Current feedback in this box";
+
+        document.getElementById("Title2").innerHTML="Title:No Current feedback in this box";
+        document.getElementById("Course2").innerHTML="Course:No Current feedback in this box";
+        document.getElementById("Stage2").innerHTML="Stage:No Current feedback in this box";
+        document.getElementById("Description2").innerHTML="Description:No Current feedback in this box";
+        document.getElementById("Type2").innerHTML="Type:No Current feedback in this box";
+        document.getElementById("Categories2").innerHTML="Categories:No Current feedback in this box";
+
+        document.getElementById("Title3").innerHTML="Title:No Current feedback in this box";
+        document.getElementById("Course3").innerHTML="Course:No Current feedback in this box";
+        document.getElementById("Stage3").innerHTML="Stage:No Current feedback in this box";
+        document.getElementById("Description3").innerHTML="Description:No Current feedback in this box";
+        document.getElementById("Type3").innerHTML="Type:No Current feedback in this box";
+        document.getElementById("Categories3").innerHTML="Categories:No Current feedback in this box";
+
+        document.getElementById("Title4").innerHTML="Title:No Current feedback in this box";
+        document.getElementById("Course4").innerHTML="Course:No Current feedback in this box";
+        document.getElementById("Stage4").innerHTML="Stage:No Current feedback in this box";
+        document.getElementById("Description4").innerHTML="Description:No Current feedback in this box";
+        document.getElementById("Type4").innerHTML="Type:No Current feedback in this box";
+        document.getElementById("Categories4").innerHTML="Categories:No Current feedback in this box";
+        //return;
         
     }
-    else if(Feedbackrecord.length>0){
+     if(Feedbackrecord.length>0){
         EarliestCurrentFeedback=0;
         console.log("Setting up news1");
         //console.log("NoOfSubmissions:"+NoOfSubMissions+" Feedbackrecordlength:"+Feedbackrecord.length);
@@ -695,6 +749,7 @@ function CreateNews(){
         document.getElementById("Description1").innerHTML="Description:"+Feedbackrecord[NoOfSubMissions-1].GetDescription();
         document.getElementById("Type1").innerHTML="Type:"+Feedbackrecord[NoOfSubMissions-1].GetSpreadOfIssue();
         CurrentCats=Feedbackrecord[0+NoOfSubMissions-1].Categories;
+        console.log(CurrentCats.length);
         if(CurrentCats.length==1){
             Tempstr="Category:"+CurrentCats[0];
         }
@@ -704,7 +759,9 @@ function CreateNews(){
                 Tempstr+=CurrentCats[i]+" ";
             }
         }
+        console.log(Tempstr);
         document.getElementById("Categories1").innerHTML=Tempstr;
+        console.log();
     }
     if(Feedbackrecord.length>1){
         EarliestCurrentFeedback=1;
@@ -773,15 +830,17 @@ function CreateNews(){
 }
 function CreateAccounts(){
     //console.log("Creating accounts");
-    //let Account1=new Account("Account1","password1");
-    ///let Account2=new Account("Account2","password2");
-    //let Account3=new Account("Account3","password3");
-    //accounts[0]=Account1;
-    //accounts[1]=Account2;
-    //accounts[2]=Account3;
-   // localStorage.setItem("Accounts",JSON.stringify(accounts));
+    let Account1=new Account("Account1","password1");
+    let Account2=new Account("Account2","password2");
+    let Account3=new Account("Account3","password3");
+    accounts[0]=Account1;
+    accounts[1]=Account2;
+    accounts[2]=Account3;
+    //localStorage.setItem("Accounts",JSON.stringify(accounts));
 
     accounts=JSON.parse(localStorage.getItem("Accounts"));
+    console.log(accounts.length);
+    console.log();
 }
 function CreateStages(){
     let Stage1=new Stage("Stage1",1,"1");
@@ -837,13 +896,12 @@ function GetStatusOfFeedbacksForPage(){
     }
 }  
 function UserNameFound(UserName){
-    console.log("Finding Username");
+    console.log(accounts.length);
     for(i=0;i<accounts.length;i++){
         if(UserName==accounts[i].UserName){
             return true;
         }
     }
-    console.log("Username not found");
     return false;
 }
 function GetAccount(UserName){
@@ -1132,16 +1190,15 @@ function AttemptSignIn(){
         NewsSection.style.display="none";
         Username.style.display="block";
         Password.style.display="block";
+        document.getElementById("SelectionsSection").style.display="block";
         Signinsection.style.display="block";
+        document.getElementById("IntroText").innerHTML=TextWhenSignedOut;
 
         
         return;
     }
     var UsernameSelected=document.getElementById("Username").value;
     var PasswordSelected=document.getElementById("Password").value;
-    console.log("Username: "+UsernameSelected);
-    console.log("Password: "+PasswordSelected);
-    
     if(UserNameFound(UsernameSelected)){
         var CurrentAccount=GetAccount(UsernameSelected);
         if(CurrentAccount.Password==PasswordSelected){
@@ -1154,9 +1211,12 @@ function AttemptSignIn(){
             document.getElementById("Username").value='';
             document.getElementById("Password").value='';
             NewsSection.style.display="block";
+            document.getElementById("SelectionsSection").style.display="none";
             Password.style.display="none";
             Username.style.display="none";
             Signinsection.style.display="none";
+            document.getElementById("IntroText").innerHTML=" Signed in";
+            document.getElementById("IntroText").innerHTML=TextWhenSignedIn;
 
         }
         else{
@@ -1328,4 +1388,26 @@ function saveToFile() {
     //document.getElementById('output').append(anchor)
 
     document.close;
+ }
+ function DeleteAllFeedBack(){
+    if(confirm("Are you sure you want to delete all feedback?")){
+        console.log("Deleteing all feedback");
+        NewEmptyArray=[];
+        Feedbackrecord.length=0;
+        Feedbackrecord=NewEmptyArray;
+        Feedbackrecord=[];
+        console.log(Feedbackrecord.length);
+        let EmptyFeedbackForNewRecord=new Feedback("N/A",Stages[0],Courses[0],["Coursework","lecturer"],"Module wide",0);
+        Feedbackrecord[0]=EmptyFeedbackForNewRecord;
+        NoOfSubMissions=1;
+        FeedbackIndex=1;
+        
+        for(i=0;i<Feedbackrecord.length;i++){
+            Feedbackrecord[i].DisplayFeedback();
+        }
+        CreateNews();
+    }
+ }
+ function DeleteSpecificFeedback(position){
+
  }

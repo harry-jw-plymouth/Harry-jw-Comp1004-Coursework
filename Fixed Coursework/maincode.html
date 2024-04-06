@@ -36,6 +36,7 @@
         font-size: 1.4vw;
         padding-left: 20px;
         font-family:sans-serif;
+        float: left;
         
         
         
@@ -59,6 +60,7 @@
       .img_deg
       { 
         border:5px solid #555;
+        float: right;
       }
       .border{
         width: 100%;
@@ -154,12 +156,12 @@
   </head>
   <body onload="SetupDocument()" style="background-color: azure;">
     <h1 style="background-color: white" class="border"><b>Course representatives feedback submission</b>  </h1>
-    <div class="container">
-      <div class="text">
-            <h1>Use this form to report any issues you may be having with courses,lecturers, the Univeristy or any other issues you may have ecountered.<br> All issues reported will be completlely anonymous. Neither course representatives or lecturers
+    <div class="container" >
+      <div class="text" style="display:block">
+            <h1 id="IntroText">Use this form to report any issues you may be having with courses,lecturers, the Univeristy or any other issues you may have ecountered.<br> All issues reported will be completlely anonymous. Neither course representatives or lecturers
                 will know that you were the one to report an issue meaning you can feel free to report any issued you may be having.</h1>
       </div>
-      <div class="image">
+      <div class="image" >
         <img class="img_deg" src= https://i2-prod.plymouthherald.co.uk/incoming/article1526310.ece/ALTERNATES/s1200e/31739801_1803549163024446_8142646875204354048_n.png">
       </div>
     
@@ -168,53 +170,56 @@
 
     <hr>
     <br>
-    <div class="aspectwrapper">
-      <div class="MainContentBlock" id="MainBlock">
-        <h3 class="QuestionsText">Please select your Course</h3>
-        <select class="CourseInput" onclick="SelectCourse()" id="Courseselected">
-          <option value="N/A">Please select a course</option>
-          <option value="CS">Computer science</option>
-          <option value="CSSE"> Computer science(software engineering)</option>
-          <option value="CSGD">Computer science(Games Devlopment)</option>
-          <option value="CSAI">Computer science(Artificial intelligence)</option>
-          <option value="CSCS">Computer science(Cyber security)</option>
-        </select>
-        <h3 class="QuestionsText">Please select your stage below</h3>
-        <select class="CourseInput" onclick="SelectStage()" id="StageSelected"> 
-          <option value="1">Stage 1</option>
-          <option value="2">Stage 2</option>
-          <option value="3">Stage 3</option>
-          <option value="p">Placement year</option>
-        </select>
-        <h3 class="QuestionsText">Please select the option which best describes your issue</h3>
-        <select class="CourseInput" onclick="SelectSpread()" id="SpreadSelected">
-          <option value="Personal issue">Personal issue</option>
-          <option value="Module Wide">Module Wide issue</option>
-          <option value="Course Wide">Course wide issue</option>
-          <option value="Stage Wide">Stage wide issue</option>
-          <option value="University Wide">Univeristy wide issue</option>
-        </select>
+    <div class="aspectwrapper" style="display:block" id="Mblock1">
+      <div class="MainContentBlock" id="MainBlock" >
+        <div style="display: block;" id="SelectionsSection"> 
+          <h3 class="QuestionsText">Please select your Course</h3>
+          <select class="CourseInput" onclick="SelectCourse()" id="Courseselected">
+            <option value="N/A">Please select a course</option>
+            <option value="CS">Computer science</option>
+            <option value="CSSE"> Computer science(software engineering)</option>
+            <option value="CSGD">Computer science(Games Devlopment)</option>
+            <option value="CSAI">Computer science(Artificial intelligence)</option>
+            <option value="CSCS">Computer science(Cyber security)</option>
+          </select>
+          <h3 class="QuestionsText">Please select your stage below</h3>
+          <select class="CourseInput" onclick="SelectStage()" id="StageSelected"> 
+            <option value="1">Stage 1</option>
+            <option value="2">Stage 2</option>
+            <option value="3">Stage 3</option>
+            <option value="p">Placement year</option>
+          </select>
+          <h3 class="QuestionsText">Please select the option which best describes your issue</h3>
+          <select class="CourseInput" onclick="SelectSpread()" id="SpreadSelected">
+            <option value="Personal issue">Personal issue</option>
+            <option value="Module Wide">Module Wide issue</option>
+            <option value="Course Wide">Course wide issue</option>
+            <option value="Stage Wide">Stage wide issue</option>
+            <option value="University Wide">Univeristy wide issue</option>
+          </select>
 
-        <h3 class="QuestionsText">Please select the options which best describe your issue</h3>
-        <form action="/category">
-          <input type="checkbox" id="Lecturer" name="choice1" value="Lecturer">
-          <label class="TickBoxText" for="Lecturer">Lecturer</label><br>
-          <input type="checkbox" id="Coursework" name="choice2" value="Coursework">
-          <label class="TickBoxText" for="Coursework">coursework</label><br>
-          <input type="checkbox" id="Facilities" name="choice3" value="Facilities">
-          <label class="TickBoxText" for="Facilities">Facilities</label><br>
-          <input type="checkbox" id="other" name="choice4" value="Other">
-          <label class="TickBoxText" for="other">Other</label><br>
-        </form><br>
-        <form action="Other option">
-          <label for="otherinfo" ><strong> you selected other. Please describe how you would catgeorise your issue</strong></label>
-          <input type="text" id="otherinfo" name="otherinfo" style="width:1000px ;">  
-        </form><br><br>
-        <h3 class="QuestionsText">Please describe your issue</h3>
-        <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
-        <button type="Button" class="submitButton" onclick="SaveSubmission()">Submit</button><br><br>
-        <p id="substatus"></p>
-        <hr>
+          <h3 class="QuestionsText">Please select the options which best describe your issue</h3>
+          <form action="/category">
+            <input type="checkbox" id="Lecturer" name="choice1" value="Lecturer">
+            <label class="TickBoxText" for="Lecturer">Lecturer</label><br>
+            <input type="checkbox" id="Coursework" name="choice2" value="Coursework">
+            <label class="TickBoxText" for="Coursework">coursework</label><br>
+            <input type="checkbox" id="Facilities" name="choice3" value="Facilities">
+            <label class="TickBoxText" for="Facilities">Facilities</label><br>
+            <input type="checkbox" id="other" name="choice4" value="Other">
+            <label class="TickBoxText" for="other">Other</label><br>
+          </form><br>
+          <form action="Other option">
+            <label for="otherinfo" ><strong> you selected other. Please describe how you would catgeorise your issue</strong></label>
+            <input type="text" id="otherinfo" name="otherinfo" style="width:1000px ;">  
+          </form><br><br>
+          <h3 class="QuestionsText">Please describe your issue</h3>
+          <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
+          <button type="Button" class="submitButton" onclick="SaveSubmission()">Submit</button><br><br>
+          <p id="substatus"></p>
+          <hr>
+        </div>
+
         <div id="SignInSection" style="display: block;">
           <h2>Sign in to view reported issues</h2>
           <h3>Please only sign in if you are a course representative</h3>
@@ -241,6 +246,9 @@
               <p id="Type1">Type:</p>
               <p id="Stage1">Stage</p>
               <p id="Description1">Description</p>
+              <button  style="float: right;"  type="button">Delete feedback in position 1</button>
+
+
             </div>
             <div class="div2">
               <p class="NewsTitle" id="Title2">Title 1</p>
@@ -271,6 +279,7 @@
             <p></p>
             <div class="ButtonBox">
               <button style="margin-left: 10%;" style="float:left ;" type="button" onclick="LoadLeft()">Later feedback</button>
+              <button style="margin-left: 20%; margin-right: 20%;" onclick="DeleteAllFeedBack()" type="button">Delete all feedback</button>
               <button style="margin-right:10% ;" style="float:right;" type="button" onclick="LoadRight()">Earlier feedback</button>
               
 
