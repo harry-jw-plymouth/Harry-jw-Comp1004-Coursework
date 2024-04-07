@@ -176,8 +176,11 @@ var accounts=[]; //Account[]
 var CurrentlySignedIn=false;//bool
 var NoOfSubMissions=0;//int
 var CurrentFeedbackInPosition1=0;//int
+var CurrentFeedbackInPosition2=0;//int
+var CurrentFeedbackInPosition3=0;//int
 var CurrentFeedbackInPosition4=0;//int
 var Feedbackjson=[];
+var NewsCurrentlyDisplaying=[];//bool
 
 function SelectStage()
 {
@@ -307,11 +310,15 @@ function SaveSubmission()
     else{
         console.log("No input issues");
         document.getElementById("substatus").innerHTML="Submission successful!";
+
         CreateFeedBack();
         ResetFields();
+        document.getElementById("SubmissionResultBox").style.display="block";
+        document.getElementById("SelectionsSection").style.display="none";
         //EditDocumentAfterSubmission();
 
     }
+
 
 }
 function EditDocumentAfterSubmission (){
@@ -603,6 +610,7 @@ function ConvertFromStorageVersionToUsable(FeedbackToConvert){
     var StageName;
     var CourseName;
     var course;
+    console.log(FeedbackToConvert.length);
     for(i=0;i< FeedbackToConvert.length;i++){
         Description=FeedbackToConvert[i].Description;
         FeedbackId=FeedbackToConvert[i].FeedbackId;
@@ -644,7 +652,7 @@ function ConvertFromStorageVersionToUsable(FeedbackToConvert){
         let CurrentFeedback=new Feedback(Description,stage,course,Categories,Spread, FeedbackId);
         convertedFeedback[i]=CurrentFeedback;
     }
-    
+    console.log(convertedFeedback.length);
     for(i =0;i<convertedFeedback.length;i++){
         console.log (" Description: "+convertedFeedback[i].Description);
         console.log("FeedbackId: " + convertedFeedback[i].FeedbackId);
@@ -667,6 +675,9 @@ function IsATempFeedBack(){
     return false;
 }
 function CreateNews(){
+    for(i=0;i<4;i++){
+        NewsCurrentlyDisplaying[i]=false;
+    }
     console.log("Setting up news");
     var CurrentCats=[];
     var Tempstr;
@@ -739,6 +750,7 @@ function CreateNews(){
         
     }
      if(Feedbackrecord.length>0){
+        NewsCurrentlyDisplaying[0]=true;
         EarliestCurrentFeedback=0;
         console.log("Setting up news1");
         //console.log("NoOfSubmissions:"+NoOfSubMissions+" Feedbackrecordlength:"+Feedbackrecord.length);
@@ -764,6 +776,7 @@ function CreateNews(){
         console.log();
     }
     if(Feedbackrecord.length>1){
+        NewsCurrentlyDisplaying[1]=true;
         EarliestCurrentFeedback=1;
         console.log("Setting up news 2");
         document.getElementById("Title2").innerHTML="Title:Feedback "+Feedbackrecord[NoOfSubMissions-2].GetFeedbackId();
@@ -785,6 +798,7 @@ function CreateNews(){
     }
     if(Feedbackrecord.length>2){
         EarliestCurrentFeedback=2;
+        NewsCurrentlyDisplaying[2]=true;
         console.log("Setting up news 3");
         document.getElementById("Title3").innerHTML="Title:Feedback "+Feedbackrecord[NoOfSubMissions-3].GetFeedbackId();
         document.getElementById("Course3").innerHTML="Course:"+Feedbackrecord[NoOfSubMissions-3].GetCourse().GetName();
@@ -804,6 +818,7 @@ function CreateNews(){
         document.getElementById("Categories3").innerHTML=Tempstr;
     }
     if(Feedbackrecord.length>3){
+        NewsCurrentlyDisplaying[3]=true;
         EarliestCurrentFeedback=3;
         console.log("Enough feedback to fill news,filling news 1-4");
         console.log("Setting up news 4");
@@ -825,6 +840,7 @@ function CreateNews(){
         }
         document.getElementById("Categories4").innerHTML=Tempstr;
     }
+    ShowOrHideNewsBlocks();
 
 
 }
@@ -838,7 +854,7 @@ function CreateAccounts(){
     accounts[2]=Account3;
     //localStorage.setItem("Accounts",JSON.stringify(accounts));
 
-    accounts=JSON.parse(localStorage.getItem("Accounts"));
+    //accounts=JSON.parse(localStorage.getItem("Accounts"));
     console.log(accounts.length);
     console.log();
 }
@@ -1087,6 +1103,39 @@ function LoadRight(){
     //move all feedback being displayed up by 1 and put the next feedback into feedback1
 
 }
+function ResetFeedback(){
+    for(i=0;i<4;i++){
+        NewsCurrentlyDisplaying[i]=false;
+    }
+    document.getElementById("Title1").innerHTML="Title:No Current feedback in this box";
+    document.getElementById("Course1").innerHTML="Course:No Current feedback in this box";
+    document.getElementById("Stage1").innerHTML="Stage:No Current feedback in this box";
+    document.getElementById("Description1").innerHTML="Description:No Current feedback in this box";
+    document.getElementById("Type1").innerHTML="Type:No Current feedback in this box";
+    document.getElementById("Categories1").innerHTML="Categories:No Current feedback in this box";
+
+        document.getElementById("Title2").innerHTML="Title:No Current feedback in this box";
+        document.getElementById("Course2").innerHTML="Course:No Current feedback in this box";
+        document.getElementById("Stage2").innerHTML="Stage:No Current feedback in this box";
+        document.getElementById("Description2").innerHTML="Description:No Current feedback in this box";
+        document.getElementById("Type2").innerHTML="Type:No Current feedback in this box";
+        document.getElementById("Categories2").innerHTML="Categories:No Current feedback in this box";
+
+        document.getElementById("Title3").innerHTML="Title:No Current feedback in this box";
+        document.getElementById("Course3").innerHTML="Course:No Current feedback in this box";
+        document.getElementById("Stage3").innerHTML="Stage:No Current feedback in this box";
+        document.getElementById("Description3").innerHTML="Description:No Current feedback in this box";
+        document.getElementById("Type3").innerHTML="Type:No Current feedback in this box";
+        document.getElementById("Categories3").innerHTML="Categories:No Current feedback in this box";
+
+        document.getElementById("Title4").innerHTML="Title:No Current feedback in this box";
+        document.getElementById("Course4").innerHTML="Course:No Current feedback in this box";
+        document.getElementById("Stage4").innerHTML="Stage:No Current feedback in this box";
+        document.getElementById("Description4").innerHTML="Description:No Current feedback in this box";
+        document.getElementById("Type4").innerHTML="Type:No Current feedback in this box";
+        document.getElementById("Categories4").innerHTML="Categories:No Current feedback in this box";
+
+}
 function ReloadAfterNewSubmission(){
     if(!CurrentlySignedIn){
         console.log("No sign in detected");
@@ -1096,15 +1145,18 @@ function ReloadAfterNewSubmission(){
     LatestCurrentFeedback=FeedbackIndex-1;
     console.log("Setting up news1");
     console.log("Index:: "+FeedbackIndex);
-    console.log(Feedbackrecord[4].GetFeedbackId());
-    CurrentFeedbackInPosition1=FeedbackIndex-1;
-    document.getElementById("Title1").innerHTML="Title:Feedback "+Feedbackrecord[FeedbackIndex-1].GetFeedbackId();
-    document.getElementById("Course1").innerHTML="Course:"+Feedbackrecord[FeedbackIndex-1].GetCourse().GetName();
-    document.getElementById("Stage1").innerHTML="Stage:"+Feedbackrecord[FeedbackIndex-1].GetStage().GetName();
-    document.getElementById("Description1").innerHTML="Description:"+Feedbackrecord[FeedbackIndex-1].GetDescription();
-    document.getElementById("Type1").innerHTML="Type:"+Feedbackrecord[FeedbackIndex-1].GetSpreadOfIssue();
-    CurrentCats=Feedbackrecord[FeedbackIndex-1].GetCategories();
-    if(CurrentCats.length==1){
+   // console.log(Feedbackrecord[4].GetFeedbackId());
+   ResetFeedback();
+   if(FeedbackIndex>0){
+    NewsCurrentlyDisplaying[0]=true;
+     CurrentFeedbackInPosition1=FeedbackIndex-1;
+     document.getElementById("Title1").innerHTML="Title:Feedback "+Feedbackrecord[FeedbackIndex-1].GetFeedbackId();
+     document.getElementById("Course1").innerHTML="Course:"+Feedbackrecord[FeedbackIndex-1].GetCourse().GetName();
+     document.getElementById("Stage1").innerHTML="Stage:"+Feedbackrecord[FeedbackIndex-1].GetStage().GetName();
+     document.getElementById("Description1").innerHTML="Description:"+Feedbackrecord[FeedbackIndex-1].GetDescription();
+     document.getElementById("Type1").innerHTML="Type:"+Feedbackrecord[FeedbackIndex-1].GetSpreadOfIssue();
+     CurrentCats=Feedbackrecord[FeedbackIndex-1].GetCategories();
+     if(CurrentCats.length==1){
         Tempstr="Category:"+CurrentCats[0];
     }
     else{
@@ -1114,7 +1166,11 @@ function ReloadAfterNewSubmission(){
         }
     }
     document.getElementById("Categories1").innerHTML=Tempstr;
+
+   }
+    
     if(FeedbackIndex>1){
+        NewsCurrentlyDisplaying[1]=true;
         LatestCurrentFeedback=FeedbackIndex-2;
         console.log("Setting up news2");
         document.getElementById("Title2").innerHTML="Title:Feedback "+Feedbackrecord[FeedbackIndex-2].GetFeedbackId();
@@ -1132,9 +1188,11 @@ function ReloadAfterNewSubmission(){
                 Tempstr+=CurrentCats[i]+" ";
             }
         }
+        document.getElementById("Categories2").innerHTML=Tempstr;
 
     }
     if(FeedbackIndex>2){
+        NewsCurrentlyDisplaying[2]=true;
         LatestCurrentFeedback=FeedbackIndex-3;
         console.log("Setting up news3");
         document.getElementById("Title3").innerHTML="Title:Feedback "+Feedbackrecord[FeedbackIndex-3].GetFeedbackId();
@@ -1152,8 +1210,10 @@ function ReloadAfterNewSubmission(){
                 Tempstr+=CurrentCats[i]+" ";
             }
         }
+        document.getElementById("Categories3").innerHTML=Tempstr;
     }
     if(FeedbackIndex>3){
+        NewsCurrentlyDisplaying[3]=true;
         LatestCurrentFeedback=FeedbackIndex-4;
         console.log("Setting up news4");
         CurrentFeedbackInPosition4=FeedbackIndex-4;
@@ -1172,7 +1232,9 @@ function ReloadAfterNewSubmission(){
                 Tempstr+=CurrentCats[i]+" ";
             }
         }
+        document.getElementById("Categories4").innerHTML=Tempstr;
     }
+    ShowOrHideNewsBlocks();
 
 }
 function AttemptSignIn(){
@@ -1211,6 +1273,7 @@ function AttemptSignIn(){
             document.getElementById("Username").value='';
             document.getElementById("Password").value='';
             NewsSection.style.display="block";
+            document.getElementById("SubmissionResultBox").style.display="none";
             document.getElementById("SelectionsSection").style.display="none";
             Password.style.display="none";
             Username.style.display="none";
@@ -1401,6 +1464,7 @@ function saveToFile() {
         Feedbackrecord[0]=EmptyFeedbackForNewRecord;
         NoOfSubMissions=1;
         FeedbackIndex=1;
+        localStorage.setItem("FeedbackRecord", JSON.stringify(ConvertToStorageVersion(Feedbackrecord)));
         
         for(i=0;i<Feedbackrecord.length;i++){
             Feedbackrecord[i].DisplayFeedback();
@@ -1409,5 +1473,78 @@ function saveToFile() {
     }
  }
  function DeleteSpecificFeedback(position){
+    if(Feedbackrecord.length==1){
+        alert("Only one feedback submission, cannot delete");
+        return;
+    }
+    if(!NewsCurrentlyDisplaying[position-1]){
+        alert("No feedback in this position,cant delete");
+        return;
+    }
+    if(confirm("This will delete the feedback currently displayed in position " + position)){
+        console.log("Deleting feedback");
+        CreateNewArrayWithoutDeletedElement(position);
+        ReloadAfterNewSubmission();
+
+
+    }
+
+ }
+ function CreateNewArrayWithoutDeletedElement(position){
+    var positionToDelete=NoOfSubMissions-position;
+    var NewFeedbackRecord=[];
+    var index=0;
+    for(i=0;i<Feedbackrecord.length;i++){
+        if(i!=positionToDelete){
+            NewFeedbackRecord[index++]=Feedbackrecord[i];
+        }
+    }
+    Feedbackrecord=NewFeedbackRecord;
+    FeedbackIndex--;
+    NoOfSubMissions--;
+
+    localStorage.setItem("FeedbackRecord", JSON.stringify(ConvertToStorageVersion(Feedbackrecord)));
+    
+    //for(i=0;i<Feedbackrecord.length;i++){
+        //Feedbackrecord[i].DisplayFeedback();
+        //console.log();
+      //  console.log();
+    //}
+    
+ }
+ function ShowOrHideNewsBlocks(){
+    if(!NewsCurrentlyDisplaying[0]){
+        document.getElementById("News1").style.display="none";
+    }
+    else{
+        document.getElementById("News1").style.display="block";
+    }
+
+    if(!NewsCurrentlyDisplaying[1]){
+        document.getElementById("News2").style.display="none";
+    }
+    else{
+        document.getElementById("News2").style.display="block";
+    }
+
+    if(!NewsCurrentlyDisplaying[2]){
+        document.getElementById("News3").style.display="none";
+    }
+    else{
+        document.getElementById("News3").style.display="block";
+    }
+
+    if(!NewsCurrentlyDisplaying[3]){
+        document.getElementById("News4").style.display="none";
+    }
+    else{
+        document.getElementById("News4").style.display="block";
+    }
+
+ }
+ function ReloadFeedbackSubmission(){
+    document.getElementById("SubmissionResultBox").style.display="none";
+    document.getElementById("SelectionsSection").style.display="block";
+    document.getElementById("substatus").innerHTML="";
 
  }
