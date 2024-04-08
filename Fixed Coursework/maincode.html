@@ -208,13 +208,18 @@
             <label class="TickBoxText" for="Coursework">coursework</label><br>
             <input type="checkbox" id="Facilities" name="choice3" value="Facilities">
             <label class="TickBoxText" for="Facilities">Facilities</label><br>
-            <input type="checkbox" id="other" name="choice4" value="Other">
-            <label class="TickBoxText" for="other">Other</label><br>
-          </form><br>
+            <input type="checkbox" id="other" name="choice4" value="Other" onclick="LoadOtherTextBox()">
+            <label class="TickBoxText" for="other">Other</label>
+          </form>
           <form action="Other option">
-            <label for="otherinfo" ><strong> you selected other. Please describe how you would catgeorise your issue</strong></label>
-            <input type="text" id="otherinfo" name="otherinfo" style="width:1000px ;">  
-          </form><br><br>
+            <div id="OtherBox" style="display: none;">
+              <br><br>
+              <label for="otherinfo" ><strong> you selected other. Please describe how you would catgeorise your issue</strong></label>
+              <input type="text" id="otherinfo" name="otherinfo" style="width:1000px ;">
+
+            </div>
+              
+          </form><br>
           <h3 class="QuestionsText">Please describe your issue</h3>
           <input type="text" id="IssueDescription" style="width: 1000px" style="height: 1000px"><br><br>
           <button type="Button" class="submitButton" onclick="SaveSubmission()">Submit</button><br><br>
@@ -228,6 +233,7 @@
           <h2 text-align="center"> It will be passed onto course reps </h2>
           <br>
           <button type="Button" class="submitButton" onclick="ReloadFeedbackSubmission()">Return to feedback submission</button><br><br>
+          <hr>
 
         </div>
         

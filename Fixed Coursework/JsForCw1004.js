@@ -331,6 +331,10 @@ function EditDocumentAfterSubmission (){
 function ResetFields(){
     document.getElementById("otherinfo").value="";
     document.getElementById("IssueDescription").value="";
+    document.getElementById("OtherBox").style.display="none";
+    var otherChecked=document.getElementById("other");
+    otherChecked=false;
+
 
 }
 function DisplayCategories(){
@@ -1254,6 +1258,8 @@ function AttemptSignIn(){
         Password.style.display="block";
         document.getElementById("SelectionsSection").style.display="block";
         Signinsection.style.display="block";
+        document.getElementById("OtherBox").style.display="none";
+
         document.getElementById("IntroText").innerHTML=TextWhenSignedOut;
 
         
@@ -1547,4 +1553,14 @@ function saveToFile() {
     document.getElementById("SelectionsSection").style.display="block";
     document.getElementById("substatus").innerHTML="";
 
+ }
+ function LoadOtherTextBox(){
+    console.log("Test");
+    var otherChecked=document.getElementById("other");
+    if(otherChecked.checked==true){
+        document.getElementById("OtherBox").style.display="block";
+    }
+    else{
+        document.getElementById("OtherBox").style.display="none";
+    }
  }
