@@ -1,3 +1,0 @@
-# Javascipt practice
-
-
