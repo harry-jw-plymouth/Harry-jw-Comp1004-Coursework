@@ -3,7 +3,7 @@ Once feedback is submitted it is saved to local storage allowing it to be access
 It also contains a tool allowing course representatives to view and delete feedback submitted about the course, allowing them to remove feedback submissions that have been sorted
 Feedback can only be viewed by course representatives and this is enforced with a sign in system
 
-As onky specific people are able to sign in there is no account creation function. To sign in please use one of the following logins
+As only specific people are able to sign in there is no account creation function. To sign in please use one of the following logins
 1: Username:Account1, Password:password1
 2: Username:Account2, Password:password2
 3: Username:Account3, Password:password2
