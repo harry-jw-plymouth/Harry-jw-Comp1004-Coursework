@@ -950,7 +950,7 @@ function LoadLeft(){
     }
     console.log("Loading later Feedback");
     if(CurrentFeedbackInPosition1==FeedbackIndex-1){
-        console.log("latest feedback already loaded");
+        alert("latest feedback already loaded");
         return;
     }
     console.log("CurrentFeedbackInPosition1:"+CurrentFeedbackInPosition1);
@@ -1034,7 +1034,7 @@ function LoadRight(){
     console.log("Loading earlier Feedback");
     
     if(CurrentFeedbackInPosition4==0){
-        console.log("Earliest feedback already loaded");
+        alert("Earliest feedback already loaded");
         return;
     }
     console.log("CurrentFeedbackInPosition1:"+CurrentFeedbackInPosition1);
