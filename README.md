@@ -22,7 +22,8 @@ While my project does not contain JSON files within the repository, JSON files a
 
 The project also contains a folder of diagrams,mostly consisting of UML diagrams but also containing class diagrams,use case diagrams, website diagrams and more 
 
-There is also 2 files for the poster used in this project, 1 is the actual file on which the poster was made(
+There is also 2 files for the poster used in this project,the first is Poster draft.pub, a publisher file on which the poster was actually made and the second was Poster finished.png,which is the finished poster
+Other than the code,mostly everything seen in this repository is also seen in some form in the design document, but for convienice in case I needed the files later I kept them stored with the repository
 
 
 
