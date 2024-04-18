@@ -1422,7 +1422,7 @@ function convertToJSON() {
 function saveToFile() {
     //ReadJSONText(); 
    convertToJSON();
-   var jsonObjectAsString = document.getElementById('output').value;
+   var jsonObjectAsString = JSON.stringify(Feedbackrecord);
  
    var blob = new Blob([jsonObjectAsString], {
      //type: 'application/json'
@@ -1431,14 +1431,14 @@ function saveToFile() {
    console.log(blob);
  
    var anchor = document.createElement('a')
-   anchor.download = "user.json";
+   anchor.download = "Feedback.json";
    anchor.href = window.URL.createObjectURL(blob);
    anchor.innerHTML = "download"
    anchor.click();
  
    console.log(anchor);
  
-   document.getElementById('output').append(anchor)
+   //document.getElementById('output').append(anchor)
  
  
  }
