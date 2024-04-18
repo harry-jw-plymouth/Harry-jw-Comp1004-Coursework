@@ -22,12 +22,12 @@ While my project does not contain JSON files within the repository, JSON files a
 
 The project also contains a folder of diagrams,mostly consisting of UML diagrams but also containing class diagrams,use case diagrams, website diagrams and more 
 
-There is also 2 files for the poster used in this project,the first is Poster draft.pub, a publisher file on which the poster was actually made and the second was Poster finished.png,which is the finished poster
-Other than the code,mostly everything seen in this repository is also seen in some form in the design document, but for convienice in case I needed the files later I kept them stored with the repository
+There is also 3 files for the poster used in this project,the first is Poster draft.pub, a publisher file on which the initial draft of the poster was made, the second is Poster fianal.pub which was the final file used for making the poster and the third was PosterFinal(completed).png,which is the finished poster in png format 
+Other than the code,mostly everything seen in this repository is also seen in some form in the design document, but for convenience in case I needed the files later I kept them stored with the repository
 
+To run the application you can either open the Code folder in VScode or open the html file 
 
-
-
+Image for plymouth uni logo taken from https://www.plymouthherald.co.uk/news/plymouth-university-changed-name-its-1526275
 
 
 
